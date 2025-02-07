@@ -36,6 +36,26 @@ public class GameBoard {
         }
     }
 
+    public int calculateScore() {
+        int score = 0;
+        for (int i = 0; i < rows; i++) {          // Scorriamo ogni riga
+            boolean sameValue = true;
+            int value = board[i][0];
+
+            for (int j = 1; j < cols; j++) {      // Verifichiamo se tutta la riga ha lo stesso valore
+                if (board[i][j] != value) {
+                    sameValue = false;
+                    break;
+                }
+            }
+
+            if (sameValue && value != 0) {        // Se la riga è omogenea, sommiamo i valori
+                score += value * cols;
+            }
+        }
+        return score;
+    }
+
 
 }
 
