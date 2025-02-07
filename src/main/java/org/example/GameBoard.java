@@ -17,4 +17,28 @@ public class GameBoard {
     public int getCols() {
         return cols;
     }
+
+    public void printBoard() {
+        for (int i = 0; i < rows; i++) { // Scorriamo le righe
+            for (int j = 0; j < cols; j++) { // Scorriamo le colonne
+                System.out.print(board[i][j] + " "); // Stampiamo il valore della cella
+            }
+            System.out.println(); // Andiamo a capo dopo ogni riga
+        }
+        System.out.println(); // Spazio extra per separare le stampe successive
+    }
+
+    public void placeTile(int row, int col, int value) {
+        if (row >= 0 && row < rows && col >= 0 && col < cols) { // Controlliamo che la posizione sia valida
+            board[row][col] = value;
+        } else {
+            System.out.println("Posizione non valida!");
+        }
+    }
+
+
 }
+
+
+
+
