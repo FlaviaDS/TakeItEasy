@@ -87,6 +87,31 @@ public class GameBoardTest {
         assertEquals(12, score);  // 4 + 4 + 4 = 12
     }
 
+    @Test
+    public void testCalculateScoreForMainDiagonal() {
+        GameBoard board = new GameBoard(3, 3);
+
+        board.placeTile(0, 0, 3);
+        board.placeTile(1, 1, 3);
+        board.placeTile(2, 2, 3);  // Main diagonal complete with value 3
+        int score = board.calculateScore();
+        assertEquals(9, score);  // 3 + 3 + 3 = 9
+    }
+
+    @Test
+    public void testCalculateScoreForSecondaryDiagonal() {
+        GameBoard board = new GameBoard(3, 3);
+
+        board.placeTile(0, 2, 6);
+        board.placeTile(1, 1, 6);
+        board.placeTile(2, 0, 6);  // Second diagonal complete with value 6
+
+        int score = board.calculateScore();
+        assertEquals(18, score);  // 6 + 6 + 6 = 18
+    }
+
+
+
 }
 
 

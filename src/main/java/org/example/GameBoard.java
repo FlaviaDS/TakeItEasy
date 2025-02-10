@@ -39,7 +39,7 @@ public class GameBoard {
     public int calculateScore() {
         int score = 0;
 
-        // ✅ Rows
+        // ✅ Calcolo del punteggio per le righe
         for (int i = 0; i < rows; i++) {
             boolean sameValue = true;
             int value = board[i][0];
@@ -51,11 +51,12 @@ public class GameBoard {
                 }
             }
 
-            if (sameValue && value != 0)
+            if (sameValue && value != 0) {
                 score += value * cols;
+            }
         }
 
-        // ✅ Cols
+        // ✅ Calcolo del punteggio per le colonne
         for (int j = 0; j < cols; j++) {
             boolean sameValue = true;
             int value = board[0][j];
@@ -67,12 +68,40 @@ public class GameBoard {
                 }
             }
 
-            if (sameValue && value != 0)
+            if (sameValue && value != 0) {
                 score += value * rows;
+            }
+        }
+
+        // ✅ Calcolo del punteggio per la diagonale principale (↘)
+        boolean sameDiagonalMain = true;
+        int valueDiagonalMain = board[0][0];
+        for (int i = 1; i < rows; i++) {
+            if (board[i][i] != valueDiagonalMain) {
+                sameDiagonalMain = false;
+                break;
+            }
+        }
+        if (sameDiagonalMain && valueDiagonalMain != 0) {
+            score += valueDiagonalMain * rows;
+        }
+
+        // ✅ Calcolo del punteggio per la diagonale secondaria (↙)
+        boolean sameDiagonalSecondary = true;
+        int valueDiagonalSecondary = board[0][cols - 1];
+        for (int i = 1; i < rows; i++) {
+            if (board[i][cols - 1 - i] != valueDiagonalSecondary) {
+                sameDiagonalSecondary = false;
+                break;
+            }
+        }
+        if (sameDiagonalSecondary && valueDiagonalSecondary != 0) {
+            score += valueDiagonalSecondary * rows;
         }
 
         return score;
     }
+
 
 
 }
