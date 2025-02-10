@@ -110,6 +110,21 @@ public class GameBoardTest {
         assertEquals(18, score);  // 6 + 6 + 6 = 18
     }
 
+    @Test
+    public void testGameOverCondition() {
+        GameBoard board = new GameBoard(3, 3);
+
+        // Fill all cells
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                board.placeTile(i, j, 1);
+            }
+        }
+
+        assertTrue(board.checkGameOver()); // Game is over
+    }
+
+
 
 
 }

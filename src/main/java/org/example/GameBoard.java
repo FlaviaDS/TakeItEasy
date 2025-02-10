@@ -29,17 +29,21 @@ public class GameBoard {
     }
 
     public void placeTile(int row, int col, int value) {
-        if (row >= 0 && row < rows && col >= 0 && col < cols) {
+        if (row >= 0 && row < rows && col >= 0 && col < cols && board[row][col] == 0) {
             board[row][col] = value;
+            if (checkGameOver()) {
+                System.out.println("Final score: " + calculateScore());
+            }
         } else {
-            System.out.println("Invalid position!");
+            System.out.println("Invalid move!");
         }
     }
+
 
     public int calculateScore() {
         int score = 0;
 
-        // ✅ Calcolo del punteggio per le righe
+        // ✅ Score for rows
         for (int i = 0; i < rows; i++) {
             boolean sameValue = true;
             int value = board[i][0];
@@ -56,7 +60,7 @@ public class GameBoard {
             }
         }
 
-        // ✅ Calcolo del punteggio per le colonne
+        // ✅ Score fro columns
         for (int j = 0; j < cols; j++) {
             boolean sameValue = true;
             int value = board[0][j];
@@ -73,7 +77,7 @@ public class GameBoard {
             }
         }
 
-        // ✅ Calcolo del punteggio per la diagonale principale (↘)
+        // ✅ Score for main diagonal (\)
         boolean sameDiagonalMain = true;
         int valueDiagonalMain = board[0][0];
         for (int i = 1; i < rows; i++) {
@@ -86,7 +90,7 @@ public class GameBoard {
             score += valueDiagonalMain * rows;
         }
 
-        // ✅ Calcolo del punteggio per la diagonale secondaria (↙)
+        // ✅ Score for second diagonal (/)
         boolean sameDiagonalSecondary = true;
         int valueDiagonalSecondary = board[0][cols - 1];
         for (int i = 1; i < rows; i++) {
@@ -101,6 +105,22 @@ public class GameBoard {
 
         return score;
     }
+
+    private boolean isGameOver = false; // Game status
+
+    public boolean checkGameOver() {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (board[i][j] == 0) { // IF still an empty cell
+                    return false;
+                }
+            }
+        }
+        isGameOver = true; // All cells are full
+        return true;
+    }
+
+
 
 
 
