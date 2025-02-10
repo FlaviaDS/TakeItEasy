@@ -1,13 +1,13 @@
-package org.example; // Aggiungi il package corretto se necessario
+package org.example;
 
 public class GameBoard {
     private int rows, cols;
-    private int[][] board; // Matrice di gioco
+    private int[][] board;
 
     public GameBoard(int rows, int cols) {
         this.rows = rows;
         this.cols = cols;
-        board = new int[rows][cols]; // Inizializza una griglia vuota
+        board = new int[rows][cols]; // Grid Init
     }
 
     public int getRows() {
@@ -32,30 +32,48 @@ public class GameBoard {
         if (row >= 0 && row < rows && col >= 0 && col < cols) {
             board[row][col] = value;
         } else {
-            System.out.println("Posizione non valida!");
+            System.out.println("Invalid position!");
         }
     }
 
     public int calculateScore() {
         int score = 0;
+
+        // ✅ Rows
         for (int i = 0; i < rows; i++) {
             boolean sameValue = true;
             int value = board[i][0];
 
             for (int j = 1; j < cols; j++) {
-                if (board[i][j] == value) {
-                    continue;
+                if (board[i][j] != value) {
+                    sameValue = false;
+                    break;
                 }
-                sameValue = false;
-                break;
             }
 
-            if (!sameValue || value == 0) continue;  // If the values are the same, sum them
-            score += value * cols;
-
+            if (sameValue && value != 0)
+                score += value * cols;
         }
+
+        // ✅ Cols
+        for (int j = 0; j < cols; j++) {
+            boolean sameValue = true;
+            int value = board[0][j];
+
+            for (int i = 1; i < rows; i++) {
+                if (board[i][j] != value) {
+                    sameValue = false;
+                    break;
+                }
+            }
+
+            if (sameValue && value != 0)
+                score += value * rows;
+        }
+
         return score;
     }
+
 
 }
 

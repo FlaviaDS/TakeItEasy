@@ -74,6 +74,19 @@ public class GameBoardTest {
         int score = board.calculateScore();
         assertEquals(18, score);  // ✅ 12 + 6 = 18
     }
+
+    @Test
+    public void testCalculateScoreColumn() {
+        GameBoard board = new GameBoard(3, 3);
+
+        board.placeTile(0, 0, 4);
+        board.placeTile(1, 0, 4);
+        board.placeTile(2, 0, 4);  // Complete Column w/ value 4
+
+        int score = board.calculateScore();
+        assertEquals(12, score);  // 4 + 4 + 4 = 12
+    }
+
 }
 
 
