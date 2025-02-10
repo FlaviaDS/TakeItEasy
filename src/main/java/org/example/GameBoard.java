@@ -19,17 +19,17 @@ public class GameBoard {
     }
 
     public void printBoard() {
-        for (int i = 0; i < rows; i++) { // Scorriamo le righe
-            for (int j = 0; j < cols; j++) { // Scorriamo le colonne
-                System.out.print(board[i][j] + " "); // Stampiamo il valore della cella
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                System.out.print(board[i][j] + " ");
             }
-            System.out.println(); // Andiamo a capo dopo ogni riga
+            System.out.println();
         }
-        System.out.println(); // Spazio extra per separare le stampe successive
+        System.out.println();
     }
 
     public void placeTile(int row, int col, int value) {
-        if (row >= 0 && row < rows && col >= 0 && col < cols) { // Controlliamo che la posizione sia valida
+        if (row >= 0 && row < rows && col >= 0 && col < cols) {
             board[row][col] = value;
         } else {
             System.out.println("Posizione non valida!");
@@ -38,24 +38,24 @@ public class GameBoard {
 
     public int calculateScore() {
         int score = 0;
-        for (int i = 0; i < rows; i++) {          // Scorriamo ogni riga
+        for (int i = 0; i < rows; i++) {
             boolean sameValue = true;
             int value = board[i][0];
 
-            for (int j = 1; j < cols; j++) {      // Verifichiamo se tutta la riga ha lo stesso valore
-                if (board[i][j] != value) {
-                    sameValue = false;
-                    break;
+            for (int j = 1; j < cols; j++) {
+                if (board[i][j] == value) {
+                    continue;
                 }
+                sameValue = false;
+                break;
             }
 
-            if (sameValue && value != 0) {        // Se la riga è omogenea, sommiamo i valori
-                score += value * cols;
-            }
+            if (!sameValue || value == 0) continue;  // If the values are the same, sum them
+            score += value * cols;
+
         }
         return score;
     }
-
 
 }
 
