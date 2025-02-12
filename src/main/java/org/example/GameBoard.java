@@ -120,9 +120,12 @@ public class GameBoard {
         return true;
     }
 
-
-
-
+    public int getTileValue(int row, int col) {
+        if (row >= 0 && row < rows && col >= 0 && col < cols) {
+            return board[row][col];
+        }
+        return 0; // Restituisce 0 se fuori dai limiti
+    }
 
 }
 
