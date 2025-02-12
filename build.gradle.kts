@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    id("application")
 }
 
 group = "org.example"
@@ -10,11 +11,16 @@ repositories {
 }
 
 dependencies {
-    // Gestisce automaticamente la versione corretta di JUnit 5
+    // Automatically manages the correct version of JUnit 5
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
 
 tasks.test {
     useJUnitPlatform()
+}
+
+// Specify the main class for the run task:
+application {
+    mainClass.set("org.example.GameBoardUI")
 }
