@@ -123,7 +123,6 @@ public class GameBoardTest {
 
         board.placeTile(4, 4, tile);
 
-        // getTileValue restituisce 0 per indici fuori dai limiti
         assertEquals(0, board.getTileValue(4, 4));
     }
 

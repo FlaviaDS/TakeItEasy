@@ -61,11 +61,23 @@ public class GameBoardUI extends JFrame {
 
             if (gameBoard.placeTile(row, col, tile)) {
                 button.setText(String.valueOf(tile.getValues()[0]));
+                if (gameBoard.checkGameOver()) {
+                    JOptionPane.showMessageDialog(this, "Game Over! Final Score: " + gameBoard.calculateScore());
+                    disableAllButtons();
+                }
             } else {
                 JOptionPane.showMessageDialog(this, "Invalid move! Cell already filled.");
             }
         } else {
             JOptionPane.showMessageDialog(this, "This cell is already filled!");
+        }
+    }
+
+    private void disableAllButtons() {
+        for (int i = 0; i < GRID_SIZE; i++) {
+            for (int j = 0; j < GRID_SIZE; j++) {
+                buttons[i][j].setEnabled(false);
+            }
         }
     }
 

@@ -18,7 +18,6 @@ public class GameBoard {
         return cols;
     }
 
-    // Modifica: se la richiesta è fuori dai limiti, restituisce 0
     public int getTileValue(int row, int col) {
         if (row < 0 || row >= rows || col < 0 || col >= cols) {
             return 0;
@@ -30,9 +29,8 @@ public class GameBoard {
         if (row < 0 || row >= rows || col < 0 || col >= cols) {
             return false;
         }
-        // Impedisce la sovrascrittura: solo se la cella è 0 (vuota)
         if (board[row][col] == 0) {
-            board[row][col] = tile.getValues()[0]; // Usa il valore frontale della tessera
+            board[row][col] = tile.getValues()[0]; // Use Tile front value
             return true;
         }
         return false;
@@ -51,23 +49,19 @@ public class GameBoard {
 
     public int calculateScore() {
         int score = 0;
-        // Controlla le righe
         for (int i = 0; i < rows; i++) {
             if (board[i][0] == board[i][1] && board[i][1] == board[i][2]) {
                 score += board[i][0] * 3;
             }
         }
-        // Controlla le colonne
         for (int j = 0; j < cols; j++) {
             if (board[0][j] == board[1][j] && board[1][j] == board[2][j]) {
                 score += board[0][j] * 3;
             }
         }
-        // Diagonale principale
         if (board[0][0] == board[1][1] && board[1][1] == board[2][2]) {
             score += board[0][0] * 3;
         }
-        // Diagonale secondaria
         if (board[0][2] == board[1][1] && board[1][1] == board[2][0]) {
             score += board[0][2] * 3;
         }
