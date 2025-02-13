@@ -4,36 +4,43 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        GameBoard board = new GameBoard(3, 3);
         Scanner scanner = new Scanner(System.in);
+        GameBoard gameBoard = new GameBoard(3, 3);
 
         System.out.println("Welcome to Take It Easy (3x3 Grid)!");
+        gameBoard.printBoard();
 
-        while (!board.checkGameOver()) {
-            board.printBoard();
+        while (!gameBoard.checkGameOver()) {
+            System.out.print("Insert row (0-2): ");
+            int row = scanner.nextInt();
+            System.out.print("Insert column (0-2): ");
+            int col = scanner.nextInt();
 
-            try {
-                System.out.print("Insert row (0-2): ");
-                int row = scanner.nextInt();
-                System.out.print("Insert column (0-2): ");
-                int col = scanner.nextInt();
-                System.out.print("Insert tile value (1-9): ");
-                int value = scanner.nextInt();
+            Tile tile = generateRandomTile();
 
-                if (row < 0 || row > 2 || col < 0 || col > 2 || value < 1 || value > 9) {
-                    System.out.println("Invalid input! Please enter numbers within the correct range.");
-                    continue;
-                }
+            System.out.println("Generated Tile: " + tile);
+            System.out.println("Choose a rotation: ");
+            System.out.println("1 - 0° | 2 - 120° | 3 - 240°");
+            int rotationChoice = scanner.nextInt();
 
-                board.placeTile(row, col, value);
-            } catch (Exception e) {
-                System.out.println("Invalid input! Please enter numbers only.");
-                scanner.nextLine(); // Clear the invalid input
+            for (int i = 0; i < rotationChoice - 1; i++) {
+                tile.rotate();
+            }
+
+            if (gameBoard.placeTile(row, col, tile)) {
+                gameBoard.printBoard();
+            } else {
+                System.out.println("Invalid move! Try again.");
             }
         }
 
-        System.out.println("Game Over!");
-        board.printBoard();
-        System.out.println("Final Score: " + board.calculateScore());
+        System.out.println("Game Over! Final Score: " + gameBoard.calculateScore());
+    }
+
+    private static Tile generateRandomTile() {
+        return new Tile(
+                (int) (Math.random() * 9) + 1,
+                (int) (Math.random() * 9) + 1,
+                (int) (Math.random() * 9) + 1);
     }
 }

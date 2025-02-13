@@ -1,13 +1,13 @@
 package org.example;
 
 public class GameBoard {
-    private int rows, cols;
-    private int[][] board;
+    private final int rows, cols;
+    private final int[][] board;
 
     public GameBoard(int rows, int cols) {
         this.rows = rows;
         this.cols = cols;
-        board = new int[rows][cols]; // Grid Init
+        board = new int[rows][cols];
     }
 
     public int getRows() {
@@ -16,6 +16,62 @@ public class GameBoard {
 
     public int getCols() {
         return cols;
+    }
+
+    // Modifica: se la richiesta è fuori dai limiti, restituisce 0
+    public int getTileValue(int row, int col) {
+        if (row < 0 || row >= rows || col < 0 || col >= cols) {
+            return 0;
+        }
+        return board[row][col];
+    }
+
+    public boolean placeTile(int row, int col, Tile tile) {
+        if (row < 0 || row >= rows || col < 0 || col >= cols) {
+            return false;
+        }
+        // Impedisce la sovrascrittura: solo se la cella è 0 (vuota)
+        if (board[row][col] == 0) {
+            board[row][col] = tile.getValues()[0]; // Usa il valore frontale della tessera
+            return true;
+        }
+        return false;
+    }
+
+    public boolean checkGameOver() {
+        for (int[] row : board) {
+            for (int cell : row) {
+                if (cell == 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public int calculateScore() {
+        int score = 0;
+        // Controlla le righe
+        for (int i = 0; i < rows; i++) {
+            if (board[i][0] == board[i][1] && board[i][1] == board[i][2]) {
+                score += board[i][0] * 3;
+            }
+        }
+        // Controlla le colonne
+        for (int j = 0; j < cols; j++) {
+            if (board[0][j] == board[1][j] && board[1][j] == board[2][j]) {
+                score += board[0][j] * 3;
+            }
+        }
+        // Diagonale principale
+        if (board[0][0] == board[1][1] && board[1][1] == board[2][2]) {
+            score += board[0][0] * 3;
+        }
+        // Diagonale secondaria
+        if (board[0][2] == board[1][1] && board[1][1] == board[2][0]) {
+            score += board[0][2] * 3;
+        }
+        return score;
     }
 
     public void printBoard() {
@@ -27,108 +83,4 @@ public class GameBoard {
         }
         System.out.println();
     }
-
-    public void placeTile(int row, int col, int value) {
-        if (row >= 0 && row < rows && col >= 0 && col < cols && board[row][col] == 0) {
-            board[row][col] = value;
-            if (checkGameOver()) {
-                System.out.println("Final score: " + calculateScore());
-            }
-        } else {
-            System.out.println("Invalid move!");
-        }
-    }
-
-
-    public int calculateScore() {
-        int score = 0;
-
-        // ✅ Score for rows
-        for (int i = 0; i < rows; i++) {
-            boolean sameValue = true;
-            int value = board[i][0];
-
-            for (int j = 1; j < cols; j++) {
-                if (board[i][j] != value) {
-                    sameValue = false;
-                    break;
-                }
-            }
-
-            if (sameValue && value != 0) {
-                score += value * cols;
-            }
-        }
-
-        // ✅ Score fro columns
-        for (int j = 0; j < cols; j++) {
-            boolean sameValue = true;
-            int value = board[0][j];
-
-            for (int i = 1; i < rows; i++) {
-                if (board[i][j] != value) {
-                    sameValue = false;
-                    break;
-                }
-            }
-
-            if (sameValue && value != 0) {
-                score += value * rows;
-            }
-        }
-
-        // ✅ Score for main diagonal (\)
-        boolean sameDiagonalMain = true;
-        int valueDiagonalMain = board[0][0];
-        for (int i = 1; i < rows; i++) {
-            if (board[i][i] != valueDiagonalMain) {
-                sameDiagonalMain = false;
-                break;
-            }
-        }
-        if (sameDiagonalMain && valueDiagonalMain != 0) {
-            score += valueDiagonalMain * rows;
-        }
-
-        // ✅ Score for second diagonal (/)
-        boolean sameDiagonalSecondary = true;
-        int valueDiagonalSecondary = board[0][cols - 1];
-        for (int i = 1; i < rows; i++) {
-            if (board[i][cols - 1 - i] != valueDiagonalSecondary) {
-                sameDiagonalSecondary = false;
-                break;
-            }
-        }
-        if (sameDiagonalSecondary && valueDiagonalSecondary != 0) {
-            score += valueDiagonalSecondary * rows;
-        }
-
-        return score;
-    }
-
-    private boolean isGameOver = false; // Game status
-
-    public boolean checkGameOver() {
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                if (board[i][j] == 0) { // IF still an empty cell
-                    return false;
-                }
-            }
-        }
-        isGameOver = true; // All cells are full
-        return true;
-    }
-
-    public int getTileValue(int row, int col) {
-        if (row >= 0 && row < rows && col >= 0 && col < cols) {
-            return board[row][col];
-        }
-        return 0; // Restituisce 0 se fuori dai limiti
-    }
-
 }
-
-
-
-

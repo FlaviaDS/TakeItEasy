@@ -2,6 +2,7 @@ package org.example;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
 public class GameBoardUI extends JFrame {
     private static final int GRID_SIZE = 3;
@@ -27,61 +28,50 @@ public class GameBoardUI extends JFrame {
     private void initializeButtons() {
         for (int i = 0; i < GRID_SIZE; i++) {
             for (int j = 0; j < GRID_SIZE; j++) {
-                // Final copies of index for func lambda
-                final int row = i;
-                final int col = j;
-                buttons[row][col] = createButton(row, col);
-                add(buttons[row][col]);
+                buttons[i][j] = createButton(i, j);
+                add(buttons[i][j]);
             }
         }
     }
 
     private JButton createButton(int row, int col) {
         JButton button = new JButton("");
-        button.addActionListener(e -> onButtonClick(row, col, button));
+        button.addActionListener(e -> handleButtonClick(row, col, button));
         return button;
     }
 
-    private void onButtonClick(int row, int col, JButton button) {
+    private void handleButtonClick(int row, int col, JButton button) {
         if (button.getText().isEmpty()) {
-            handleEmptyCell(row, col, button);
+            Tile tile = generateRandomTile();
+
+            String[] rotations = {"0°", "120°", "240°"};
+            int choice = JOptionPane.showOptionDialog(
+                    this,
+                    "Choose a tile rotation:\n" + tile,
+                    "Rotate Tile",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    rotations,
+                    rotations[0]);
+
+            for (int i = 0; i < choice; i++) {
+                tile.rotate();
+            }
+
+            if (gameBoard.placeTile(row, col, tile)) {
+                button.setText(String.valueOf(tile.getValues()[0]));
+            } else {
+                JOptionPane.showMessageDialog(this, "Invalid move! Cell already filled.");
+            }
         } else {
-            showMessage("This cell is full");
+            JOptionPane.showMessageDialog(this, "This cell is already filled!");
         }
     }
 
-    private void handleEmptyCell(int row, int col, JButton button) {
-        String input = getUserInput();
-        if (isValidInput(input)) {
-            int value = Integer.parseInt(input);
-            updateGameState(row, col, value, button);
-        } else {
-            showMessage("Invalid input!");
-        }
-    }
-
-    private String getUserInput() {
-        return JOptionPane.showInputDialog(
-                null,
-                "Insert a number (1-9):",
-                "Input",
-                JOptionPane.PLAIN_MESSAGE);
-    }
-
-    private boolean isValidInput(String input) {
-        return input != null && input.matches("[1-9]");
-    }
-
-    private void updateGameState(int row, int col, int value, JButton button) {
-        gameBoard.placeTile(row, col, value);
-        button.setText(String.valueOf(value));
-        if (gameBoard.checkGameOver()) {
-            showMessage("Game Over! Final score: " + gameBoard.calculateScore());
-        }
-    }
-
-    private void showMessage(String message) {
-        JOptionPane.showMessageDialog(null, message);
+    private Tile generateRandomTile() {
+        Random rand = new Random();
+        return new Tile(rand.nextInt(9) + 1, rand.nextInt(9) + 1, rand.nextInt(9) + 1);
     }
 
     public static void main(String[] args) {
