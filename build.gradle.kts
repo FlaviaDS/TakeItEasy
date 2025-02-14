@@ -20,5 +20,6 @@ tasks.test {
 }
 
 application {
-    mainClass.set("org.example.GameBoardUI")
+    mainClass.set("org.example.view.GameBoardUI")
 }
+

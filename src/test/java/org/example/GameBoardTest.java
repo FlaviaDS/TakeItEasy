@@ -1,5 +1,7 @@
-package org.example;
+package org.example; // oppure, se preferisci, puoi spostare i test anche in un package specifico
 
+import org.example.model.GameBoard;
+import org.example.model.Tile;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -1,16 +1,19 @@
 package org.example;
 
+import org.example.controller.GameController;
+import org.example.model.Tile;
+
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        GameBoard gameBoard = new GameBoard(3, 3);
+        GameController gameController = new GameController(3, 3);
 
         System.out.println("Welcome to Take It Easy (3x3 Grid)!");
-        gameBoard.printBoard();
+        gameController.getGameBoard().printBoard();
 
-        while (!gameBoard.checkGameOver()) {
+        while (!gameController.isGameOver()) {
             System.out.print("Insert row (0-2): ");
             int row = scanner.nextInt();
             System.out.print("Insert column (0-2): ");
@@ -23,18 +26,15 @@ public class Main {
             System.out.println("1 - 0° | 2 - 120° | 3 - 240°");
             int rotationChoice = scanner.nextInt();
 
-            for (int i = 0; i < rotationChoice - 1; i++) {
-                tile.rotate();
-            }
-
-            if (gameBoard.placeTile(row, col, tile)) {
-                gameBoard.printBoard();
+            // Apply (rotationChoice - 1) rotations
+            if (gameController.placeTile(row, col, tile, rotationChoice - 1)) {
+                gameController.getGameBoard().printBoard();
             } else {
                 System.out.println("Invalid move! Try again.");
             }
         }
 
-        System.out.println("Game Over! Final Score: " + gameBoard.calculateScore());
+        System.out.println("Game Over! Final Score: " + gameController.getFinalScore());
     }
 
     private static Tile generateRandomTile() {

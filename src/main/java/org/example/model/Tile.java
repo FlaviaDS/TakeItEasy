@@ -1,4 +1,4 @@
-package org.example;
+package org.example.model;
 
 import java.util.Arrays;
 
@@ -9,6 +9,9 @@ public class Tile {
         values = new int[]{v1, v2, v3};
     }
 
+    /**
+     * Roatates the tile by moving the values (first becomes the last).
+     */
     public void rotate() {
         int temp = values[0];
         values[0] = values[1];
