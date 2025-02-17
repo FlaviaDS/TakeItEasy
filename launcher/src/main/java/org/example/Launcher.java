@@ -4,30 +4,28 @@ import java.util.Scanner;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-// Importa la versione classica
+// Rectangular version
 import org.example.view.GameBoardUI;
 
-// Importa la versione esagonale (HexGridPanel)
+// Hexagonal version
 import org.example.view.HexGridPanel;
 
 public class Launcher {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Seleziona la versione da lanciare:");
-        System.out.println("1 - Versione classica rettangolare");
-        System.out.println("2 - Versione esagonale");
+        System.out.println("Select the game version:");
+        System.out.println("1 - Rectangular");
+        System.out.println("2 - Hexagonal");
 
         int scelta = scanner.nextInt();
 
         if (scelta == 1) {
-            System.out.println("Avvio della versione classica...");
-            // Avvia la versione classica (GameBoardUI deve avere un metodo main)
+            System.out.println("Launching rectangular version...");
             SwingUtilities.invokeLater(() -> GameBoardUI.main(args));
         } else if (scelta == 2) {
-            System.out.println("Avvio della versione esagonale...");
-            // Avvia la versione esagonale creando un JFrame con HexGridPanel
+            System.out.println("Launching hexagonal version...");
             SwingUtilities.invokeLater(() -> {
-                JFrame frame = new JFrame("Versione Esagonale");
+                JFrame frame = new JFrame("Hexagonal version");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.add(new HexGridPanel());
                 frame.pack();
@@ -35,7 +33,7 @@ public class Launcher {
                 frame.setVisible(true);
             });
         } else {
-            System.out.println("Scelta non valida. Uscita.");
+            System.out.println("Invalid choice. Exiting.");
         }
     }
 }
