@@ -2,7 +2,6 @@ package org.example;
 
 import org.example.model.HexagonalGameBoard;
 import org.example.model.HexTile;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -153,25 +152,6 @@ public class HexagonalGameBoardTest {
         assertEquals(15, score);
     }
 
-    @Disabled
-    @Test
-    public void testCalculateScoreMultipleLines() {
-        HexagonalGameBoard board = new HexagonalGameBoard();
-        // Vertical line in column 2: (0,2),(1,2),(2,2) -> 3 * 3 = 9
-        HexTile tile3 = new HexTile(3, 3, 3);
-        board.placeTile(0, 2, tile3);
-        board.placeTile(1, 2, tile3);
-        board.placeTile(2, 2, tile3);
-        // Diagonal down-left: (1,4),(2,3),(3,2) -> 3 * 5 = 15
-        HexTile tile5 = new HexTile(5, 5, 5);
-        board.placeTile(1, 4, tile5);
-        board.placeTile(2, 3, tile5);
-        board.placeTile(3, 2, tile5);
-        int score = board.calculateScore();
-        System.out.println("Multiple lines score: " + score);
-        assertEquals(24, score);
-    }
-
     @Test
     public void testCalculateScoreVerticalLineOfFour() {
         HexagonalGameBoard board = new HexagonalGameBoard();
@@ -188,10 +168,10 @@ public class HexagonalGameBoardTest {
     }
 
     @Test
-    public void testCalculateScoreVerticalLineOfThreeValid() {
+    public void testCalculateScoreVerticalLineOfThree() {
         HexagonalGameBoard board = new HexagonalGameBoard();
         HexTile tile6 = new HexTile(6, 6, 6);
-        // Vertical line in column 1: row 1,2,3 (dato che per row1 e row3, la colonna 1 è valida)
+        // Vertical line in column 1: row 1,2,3
         board.placeTile(1, 1, tile6);
         board.placeTile(2, 1, tile6);
         board.placeTile(3, 1, tile6);
@@ -199,5 +179,23 @@ public class HexagonalGameBoardTest {
         System.out.println("Vertical line of three valid score: " + score);
         // Expected: 3 * 6 = 18
         assertEquals(18, score);
+    }
+
+    @Test
+    public void testCalculateScoreMultipleLines() {
+        HexagonalGameBoard board = new HexagonalGameBoard();
+        // Vertical line in column 2: rows 0,1,2 → expected: 3 * 3 = 9
+        HexTile tile3 = new HexTile(3, 3, 3);
+        board.placeTile(0, 2, tile3);
+        board.placeTile(1, 2, tile3);
+        board.placeTile(2, 2, tile3);
+        // Diagonal down-right: starting at (2,0): (2,0), (3,1), (4,2) → expected: 3 * 5 = 15
+        HexTile tile5 = new HexTile(5, 5, 5);
+        board.placeTile(2, 0, tile5);
+        board.placeTile(3, 1, tile5);
+        board.placeTile(4, 2, tile5);
+        int score = board.calculateScore();
+        System.out.println("Multiple lines score: " + score);
+        assertEquals(24, score);
     }
 }
