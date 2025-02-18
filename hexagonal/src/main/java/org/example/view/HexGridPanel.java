@@ -121,7 +121,7 @@ public class HexGridPanel extends JPanel {
 
     private void drawTileNumbers(Graphics2D g2, Rectangle bounds, HexTile tile) {
         int[] values = tile.getValues();
-        FontMetrics fm = g2.getFontMetrics();
+        g2.getFontMetrics();
         int cx = bounds.x + bounds.width / 2;
         int cy = bounds.y + bounds.height / 2;
         g2.setColor(Color.BLACK);

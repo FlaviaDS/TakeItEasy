@@ -64,28 +64,33 @@ public class HexagonalGameBoard {
 
     public int calculateScore() {
         int score = 0;
+        // Direzioni: vertical (1,0), diagonal down-right (1,1), diagonal down-left (1,-1)
         int[][] directions = {
-                {1, 0},   // Vertical
-                {1, 1},   // Diagonal down-right
-                {1, -1}   // Diagonal down-left
+                {1, 0},
+                {1, 1},
+                {1, -1}
         };
 
-        System.out.println("===== Calculating Score =====");
+        System.out.println("===== Calculating Score (edge-to-edge) =====");
 
         for (int[] d : directions) {
-            int dr = d[0];
-            int dc = d[1];
+            int dr = d[0], dc = d[1];
             for (int r = 0; r < rows; r++) {
                 for (int c = 0; c < cols; c++) {
                     if (!isValidPosition(r, c)) continue;
-                    int prevR = r - dr;
-                    int prevC = c - dc;
+
+                    int prevR = r - dr, prevC = c - dc;
+                    // Se la cella precedente è valida e non vuota, non è l'inizio di una linea edge-to-edge
                     if (isValidPosition(prevR, prevC) && getTileValue(prevR, prevC) != 0) continue;
+
                     int commonValue = getTileValue(r, c);
-                    if (commonValue == 0) continue;
+                    if (commonValue == 0) continue; // cella vuota => niente linea
+
+                    // Conta le celle consecutive con lo stesso valore
                     int length = 0;
                     int curR = r, curC = c;
                     StringBuilder lineCoords = new StringBuilder();
+
                     while (isValidPosition(curR, curC)) {
                         int cellValue = getTileValue(curR, curC);
                         if (cellValue == 0 || cellValue != commonValue) break;
@@ -94,8 +99,18 @@ public class HexagonalGameBoard {
                         curR += dr;
                         curC += dc;
                     }
-                    System.out.println("Checking line from (" + r + "," + c + ") with value " + commonValue + ": " + lineCoords);
-                    if (length >= 2) {
+
+                    // Ora verifichiamo se la linea termina fuori dal board o su una cella vuota.
+                    // Se la cella successiva è valida e non vuota => non è un bordo, linea non completa
+                    boolean isEdgeToEdge = !isValidPosition(curR, curC) || getTileValue(curR, curC) == 0;
+                    // La linea prosegue su una cella dello stesso valore => non è un "bordo"
+
+                    System.out.println("Checking line from (" + r + "," + c + ") val=" + commonValue
+                            + " -> " + lineCoords + " length=" + length
+                            + " edgeToEdge=" + isEdgeToEdge);
+
+                    // Punteggio se length >= 2 e la linea è edge-to-edge
+                    if (length >= 2 && isEdgeToEdge) {
                         int lineScore = length * commonValue;
                         score += lineScore;
                         System.out.println("Scored " + lineScore + " points from line: " + lineCoords);
@@ -108,6 +123,9 @@ public class HexagonalGameBoard {
         printBoard();
         return score;
     }
+
+
+
 
     public void printBoard() {
         System.out.println("Current Board:");

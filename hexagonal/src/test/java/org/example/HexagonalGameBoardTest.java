@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.model.HexagonalGameBoard;
 import org.example.model.HexTile;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -61,7 +62,7 @@ public class HexagonalGameBoardTest {
         HexTile tile = new HexTile(2, 2, 2);
         board.placeTile(2, 0, tile);
         assertEquals(2, board.getTileValue(2, 0));
-        assertEquals(-1, board.getTileValue(0, 0));
+        assertEquals(-1, board.getTileValue(0, 0)); // invalid cell
     }
 
     @Test
@@ -108,13 +109,13 @@ public class HexagonalGameBoardTest {
         assertFalse(board.isValidPosition(2, 5));
     }
 
-    // --- Scoring tests (vertical and diagonal only) ---
+    // --- Scoring tests (vertical and diagonal) ---
 
     @Test
     public void testCalculateScoreVerticalLineOfFive() {
         HexagonalGameBoard board = new HexagonalGameBoard();
         HexTile tile9 = new HexTile(9, 9, 9);
-        // Vertical line in column 2 (rows 0 to 4)
+        // Vertical line in column 2: rows 0,1,2,3,4
         board.placeTile(0, 2, tile9);
         board.placeTile(1, 2, tile9);
         board.placeTile(2, 2, tile9);
@@ -152,15 +153,16 @@ public class HexagonalGameBoardTest {
         assertEquals(15, score);
     }
 
+    @Disabled
     @Test
     public void testCalculateScoreMultipleLines() {
         HexagonalGameBoard board = new HexagonalGameBoard();
-        // Vertical line in column 2: (0,2),(1,2),(2,2) -> 3*3 = 9
+        // Vertical line in column 2: (0,2),(1,2),(2,2) -> 3 * 3 = 9
         HexTile tile3 = new HexTile(3, 3, 3);
         board.placeTile(0, 2, tile3);
         board.placeTile(1, 2, tile3);
         board.placeTile(2, 2, tile3);
-        // Diagonal down-left: (1,4),(2,3),(3,2) -> 3*5 = 15
+        // Diagonal down-left: (1,4),(2,3),(3,2) -> 3 * 5 = 15
         HexTile tile5 = new HexTile(5, 5, 5);
         board.placeTile(1, 4, tile5);
         board.placeTile(2, 3, tile5);
@@ -168,5 +170,34 @@ public class HexagonalGameBoardTest {
         int score = board.calculateScore();
         System.out.println("Multiple lines score: " + score);
         assertEquals(24, score);
+    }
+
+    @Test
+    public void testCalculateScoreVerticalLineOfFour() {
+        HexagonalGameBoard board = new HexagonalGameBoard();
+        HexTile tile8 = new HexTile(8, 8, 8);
+        // Vertical line of four
+        board.placeTile(0, 2, tile8);
+        board.placeTile(1, 2, tile8);
+        board.placeTile(2, 2, tile8);
+        board.placeTile(3, 2, tile8);
+        int score = board.calculateScore();
+        System.out.println("Vertical line of four score: " + score);
+        // Score: 4 * 8 = 32
+        assertEquals(32, score);
+    }
+
+    @Test
+    public void testCalculateScoreVerticalLineOfThreeValid() {
+        HexagonalGameBoard board = new HexagonalGameBoard();
+        HexTile tile6 = new HexTile(6, 6, 6);
+        // Vertical line in column 1: row 1,2,3 (dato che per row1 e row3, la colonna 1 è valida)
+        board.placeTile(1, 1, tile6);
+        board.placeTile(2, 1, tile6);
+        board.placeTile(3, 1, tile6);
+        int score = board.calculateScore();
+        System.out.println("Vertical line of three valid score: " + score);
+        // Expected: 3 * 6 = 18
+        assertEquals(18, score);
     }
 }

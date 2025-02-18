@@ -17,12 +17,12 @@ public class Launcher {
         System.out.println("1 - Rectangular");
         System.out.println("2 - Hexagonal");
 
-        int scelta = scanner.nextInt();
+        int choice = scanner.nextInt();
 
-        if (scelta == 1) {
+        if (choice == 1) {
             System.out.println("Launching rectangular version...");
             SwingUtilities.invokeLater(() -> GameBoardUI.main(args));
-        } else if (scelta == 2) {
+        } else if (choice == 2) {
             System.out.println("Launching hexagonal version...");
             SwingUtilities.invokeLater(() -> {
                 JFrame frame = new JFrame("Hexagonal version");
