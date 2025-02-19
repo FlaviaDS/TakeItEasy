@@ -102,15 +102,19 @@ public class HexGridPanel extends JPanel {
         super.paintComponent(g);
         hexPolys = computePolygonsFinal();
         Graphics2D g2 = (Graphics2D) g;
+
         for (int r = 0; r < ROWS; r++) {
             for (int c = 0; c < COLS; c++) {
                 if (!board.isValidPosition(r, c)) continue;
                 Polygon poly = hexPolys[r][c];
                 if (poly == null) continue;
-                g2.setColor(Color.LIGHT_GRAY);
+
+                g2.setColor(new Color(255, 240, 150));
                 g2.fill(poly);
+
                 g2.setColor(Color.DARK_GRAY);
                 g2.draw(poly);
+
                 HexTile tile = board.getTile(r, c);
                 if (tile != null) {
                     drawTileNumbers(g2, poly.getBounds(), tile);
@@ -118,6 +122,7 @@ public class HexGridPanel extends JPanel {
             }
         }
     }
+
 
     private void drawTileNumbers(Graphics2D g2, Rectangle bounds, HexTile tile) {
         int[] values = tile.getValues();

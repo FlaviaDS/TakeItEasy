@@ -108,20 +108,20 @@ public class HexagonalGameBoardTest {
         assertFalse(board.isValidPosition(2, 5));
     }
 
-    // --- Scoring tests (vertical and diagonal) ---
+    // --- Scoring tests (edge-to-edge, complete lines) ---
 
     @Test
     public void testCalculateScoreVerticalLineOfFive() {
         HexagonalGameBoard board = new HexagonalGameBoard();
         HexTile tile9 = new HexTile(9, 9, 9);
-        // Vertical line in column 2: rows 0,1,2,3,4
+        // Vertical line in column 2: rows 0,1,2,3,4 are all valid borders.
         board.placeTile(0, 2, tile9);
         board.placeTile(1, 2, tile9);
         board.placeTile(2, 2, tile9);
         board.placeTile(3, 2, tile9);
         board.placeTile(4, 2, tile9);
         int score = board.calculateScore();
-        System.out.println("Vertical line of five score: " + score);
+        // Expected: 5 * 9 = 45
         assertEquals(45, score);
     }
 
@@ -129,13 +129,14 @@ public class HexagonalGameBoardTest {
     public void testCalculateScoreDiagonalLineOfFour() {
         HexagonalGameBoard board = new HexagonalGameBoard();
         HexTile tile7 = new HexTile(7, 7, 7);
-        // Diagonal down-right: (1,1), (2,2), (3,3), (4,4)
+        // Diagonal down-right: (1,1) to (4,4).
+        // (1,1) is border in row1 (min valid = 1) and (4,4) is border in row4.
         board.placeTile(1, 1, tile7);
         board.placeTile(2, 2, tile7);
         board.placeTile(3, 3, tile7);
         board.placeTile(4, 4, tile7);
         int score = board.calculateScore();
-        System.out.println("Diagonal line of four score: " + score);
+        // Expected: 4 * 7 = 28
         assertEquals(28, score);
     }
 
@@ -144,39 +145,41 @@ public class HexagonalGameBoardTest {
         HexagonalGameBoard board = new HexagonalGameBoard();
         HexTile tile5 = new HexTile(5, 5, 5);
         // Diagonal down-left: (1,4), (2,3), (3,2)
+        // (1,4) is border (max in row1) but (3,2) is NOT border in row3 (borders are 1 and 4)
+        // quindi la linea non è completa edge-to-edge.
         board.placeTile(1, 4, tile5);
         board.placeTile(2, 3, tile5);
         board.placeTile(3, 2, tile5);
         int score = board.calculateScore();
-        System.out.println("Diagonal line of three score: " + score);
-        assertEquals(15, score);
+        // Expected: 0 (line not complete edge-to-edge)
+        assertEquals(0, score);
     }
 
     @Test
     public void testCalculateScoreVerticalLineOfFour() {
         HexagonalGameBoard board = new HexagonalGameBoard();
         HexTile tile8 = new HexTile(8, 8, 8);
-        // Vertical line of four
+        // Vertical line in column 2: rows 0-3.
+        // Row0 is border, ma row3 (in row3 valid: {1,2,3,4}) non è border (bordi: 1 e 4)
         board.placeTile(0, 2, tile8);
         board.placeTile(1, 2, tile8);
         board.placeTile(2, 2, tile8);
         board.placeTile(3, 2, tile8);
         int score = board.calculateScore();
-        System.out.println("Vertical line of four score: " + score);
-        // Score: 4 * 8 = 32
-        assertEquals(32, score);
+        // Expected: 0 (line not complete edge-to-edge)
+        assertEquals(0, score);
     }
 
     @Test
     public void testCalculateScoreVerticalLineOfThree() {
         HexagonalGameBoard board = new HexagonalGameBoard();
         HexTile tile6 = new HexTile(6, 6, 6);
-        // Vertical line in column 1: row 1,2,3
+        // Vertical line in column 1: rows 1,2,3.
+        // In row1 valid: {1,2,3,4} → (1,1) is border (min), in row3 valid: {1,2,3,4} → (3,1) is border.
         board.placeTile(1, 1, tile6);
         board.placeTile(2, 1, tile6);
         board.placeTile(3, 1, tile6);
         int score = board.calculateScore();
-        System.out.println("Vertical line of three valid score: " + score);
         // Expected: 3 * 6 = 18
         assertEquals(18, score);
     }
@@ -184,18 +187,49 @@ public class HexagonalGameBoardTest {
     @Test
     public void testCalculateScoreMultipleLines() {
         HexagonalGameBoard board = new HexagonalGameBoard();
-        // Vertical line in column 2: rows 0,1,2 → expected: 3 * 3 = 9
+        // Vertical line in column 2: rows 0,1,2 → would yield 3*3=9, but check borders:
+        // For row0 (valid {2,3,4}), (0,2) is border.
+        // For row2 (valid {0,1,2,3,4}), borders are 0 and 4; (2,2) is NOT border → thus incomplete vertical line.
+        // Therefore, expected score from vertical line = 0.
         HexTile tile3 = new HexTile(3, 3, 3);
         board.placeTile(0, 2, tile3);
         board.placeTile(1, 2, tile3);
         board.placeTile(2, 2, tile3);
-        // Diagonal down-right: starting at (2,0): (2,0), (3,1), (4,2) → expected: 3 * 5 = 15
+
+        // Diagonal down-right complete: (2,0), (3,1), (4,2)
+        // Row2 valid: {0,1,2,3,4} → (2,0) is border (min); row4 valid: {2,3,4} → (4,2) is border (min).
         HexTile tile5 = new HexTile(5, 5, 5);
         board.placeTile(2, 0, tile5);
         board.placeTile(3, 1, tile5);
         board.placeTile(4, 2, tile5);
         int score = board.calculateScore();
-        System.out.println("Multiple lines score: " + score);
-        assertEquals(24, score);
+        // Expected: only the diagonal line scores: 3*5 = 15.
+        assertEquals(15, score);
+    }
+
+    @Test
+    public void testCalculateScoreIncompleteVerticalLine() {
+        HexagonalGameBoard board = new HexagonalGameBoard();
+        HexTile tile4 = new HexTile(4, 4, 4);
+        HexTile tile7 = new HexTile(7, 7, 7);
+        // Vertical line: rows 0 and 1 get tile4, row 2 gets tile7 → line is broken.
+        board.placeTile(0, 2, tile4);
+        board.placeTile(1, 2, tile4);
+        board.placeTile(2, 2, tile7);
+        int score = board.calculateScore();
+        // Expected: 0
+        assertEquals(0, score);
+    }
+
+    @Test
+    public void testCalculateScoreDiagonalLineIncomplete() {
+        HexagonalGameBoard board = new HexagonalGameBoard();
+        HexTile tile7 = new HexTile(7, 7, 7);
+        // Diagonal down-right incomplete: place tile only in (2,2) and (3,3).
+        board.placeTile(2, 2, tile7);
+        board.placeTile(3, 3, tile7);
+        int score = board.calculateScore();
+        // Expected: 0 (line not complete edge-to-edge, length less than 3)
+        assertEquals(0, score);
     }
 }

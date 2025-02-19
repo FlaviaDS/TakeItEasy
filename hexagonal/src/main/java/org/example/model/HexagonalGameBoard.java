@@ -5,31 +5,22 @@ public class HexagonalGameBoard {
     private final int cols = 5;
     private final HexTile[][] board;
     private final boolean[][] validMask;
+    private static final int[][] VALID_COLUMNS = {
+            {2, 3, 4},      // Row 0
+            {1, 2, 3, 4},   // Row 1
+            {0, 1, 2, 3, 4},// Row 2
+            {1, 2, 3, 4},   // Row 3
+            {2, 3, 4}       // Row 4
+    };
 
     public HexagonalGameBoard() {
         board = new HexTile[rows][cols];
         validMask = new boolean[rows][cols];
-
-        // Row 0: columns 2..4 (3 cells)
-        for (int j = 2; j <= 4; j++) {
-            validMask[0][j] = true;
-        }
-        // Row 1: columns 1..4 (4 cells)
-        for (int j = 1; j <= 4; j++) {
-            validMask[1][j] = true;
-        }
-        // Row 2: columns 0..4 (5 cells)
-        for (int j = 0; j < cols; j++) {
-            validMask[2][j] = true;
-        }
-        // Row 3: columns 1..4 (4 cells)
-        for (int j = 1; j <= 4; j++) {
-            validMask[3][j] = true;
-        }
-        // Row 4: columns 2..4 (3 cells)
-        for (int j = 2; j <= 4; j++) {
-            validMask[4][j] = true;
-        }
+        for (int j = 2; j <= 4; j++) validMask[0][j] = true;
+        for (int j = 1; j <= 4; j++) validMask[1][j] = true;
+        for (int j = 0; j < cols; j++) validMask[2][j] = true;
+        for (int j = 1; j <= 4; j++) validMask[3][j] = true;
+        for (int j = 2; j <= 4; j++) validMask[4][j] = true;
     }
 
     public boolean isValidPosition(int row, int col) {
@@ -61,9 +52,24 @@ public class HexagonalGameBoard {
         return true;
     }
 
+    public void printBoard() {
+        System.out.println("Current Board:");
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (!validMask[i][j])
+                    System.out.print("X  ");
+                else {
+                    HexTile tile = board[i][j];
+                    System.out.print((tile != null ? tile.getValues()[0] : ".") + "  ");
+                }
+            }
+            System.out.println();
+        }
+    }
+
     public int calculateScore() {
         int score = 0;
-        // vertical (1,0), diagonal down-right (1,1), diagonal down-left (1,-1)
+        // Consider directions: vertical, diagonal down-right, diagonal down-left.
         int[][] directions = {
                 {1, 0},
                 {1, 1},
@@ -71,40 +77,32 @@ public class HexagonalGameBoard {
         };
 
         System.out.println("===== Calculating Score (edge-to-edge) =====");
-
         for (int[] d : directions) {
             int dr = d[0], dc = d[1];
             for (int r = 0; r < rows; r++) {
                 for (int c = 0; c < cols; c++) {
                     if (!isValidPosition(r, c)) continue;
-
                     int prevR = r - dr, prevC = c - dc;
-                    if (isValidPosition(prevR, prevC) && getTileValue(prevR, prevC) != 0) continue;
-
+                    // The start cell must be at the edge: previous cell out-of-bounds or empty.
+                    boolean startEdge = !isValidPosition(prevR, prevC) || getTileValue(prevR, prevC) == 0;
+                    if (!startEdge) continue;
                     int commonValue = getTileValue(r, c);
                     if (commonValue == 0) continue;
-
                     int length = 0;
                     int curR = r, curC = c;
                     StringBuilder lineCoords = new StringBuilder();
-
-                    while (isValidPosition(curR, curC)) {
-                        int cellValue = getTileValue(curR, curC);
-                        if (cellValue == 0 || cellValue != commonValue) break;
+                    while (isValidPosition(curR, curC) && getTileValue(curR, curC) == commonValue) {
                         length++;
                         lineCoords.append("(").append(curR).append(",").append(curC).append(") ");
                         curR += dr;
                         curC += dc;
                     }
-
-                    boolean isEdgeToEdge = !isValidPosition(curR, curC) || getTileValue(curR, curC) == 0;
-
-                    System.out.println("Checking line from (" + r + "," + c + ") val=" + commonValue
-                            + " -> " + lineCoords + " length=" + length
-                            + " edgeToEdge=" + isEdgeToEdge);
-
-                    // Score if length >= 2 and line is edge-to-edge
-                    if (length >= 2 && isEdgeToEdge) {
+                    int lastR = curR - dr, lastC = curC - dc;
+                    // The line is complete if both start and last cells are borders.
+                    boolean complete = isBorderCell(r, c) && isBorderCell(lastR, lastC);
+                    System.out.println("Checking line from (" + r + "," + c + ") with value "
+                            + commonValue + ": " + lineCoords + " length=" + length + " complete=" + complete);
+                    if (length >= 3 && complete) {
                         int lineScore = length * commonValue;
                         score += lineScore;
                         System.out.println("Scored " + lineScore + " points from line: " + lineCoords);
@@ -112,27 +110,17 @@ public class HexagonalGameBoard {
                 }
             }
         }
-
         System.out.println("===== Final Score: " + score + " =====");
         printBoard();
         return score;
     }
 
-
-
-
-    public void printBoard() {
-        System.out.println("Current Board:");
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                if (!validMask[i][j]) {
-                    System.out.print("X  ");
-                } else {
-                    HexTile tile = board[i][j];
-                    System.out.print((tile != null ? tile.getValues()[0] : ".") + "  ");
-                }
-            }
-            System.out.println();
-        }
+    private boolean isBorderCell(int row, int col) {
+        if (!isValidPosition(row, col)) return false;
+        if (row == 0 || row == rows - 1) return true;
+        int[] valid = VALID_COLUMNS[row];
+        int min = valid[0];
+        int max = valid[valid.length - 1];
+        return col == min || col == max;
     }
 }

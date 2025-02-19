@@ -1,39 +1,47 @@
 package org.example;
 
-import java.util.Scanner;
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
-
-// Rectangular version
+import org.example.view.HexGridPanel;
 import org.example.view.GameBoardUI;
 
-// Hexagonal version
-import org.example.view.HexGridPanel;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
 
 public class Launcher {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Select the game version:");
-        System.out.println("1 - Rectangular");
-        System.out.println("2 - Hexagonal");
-
-        int choice = scanner.nextInt();
-
-        if (choice == 1) {
-            System.out.println("Launching rectangular version...");
-            SwingUtilities.invokeLater(() -> GameBoardUI.main(args));
-        } else if (choice == 2) {
-            System.out.println("Launching hexagonal version...");
-            SwingUtilities.invokeLater(() -> {
-                JFrame frame = new JFrame("Hexagonal version");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.add(new HexGridPanel());
-                frame.pack();
-                frame.setLocationRelativeTo(null);
-                frame.setVisible(true);
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("Choose Game Version");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(300, 200);
+            frame.setLayout(new GridLayout(2, 1, 10, 10));
+            JButton btnClassic = new JButton("3x3 Rectangular Version");
+            btnClassic.setFont(new Font("Arial", Font.BOLD, 16));
+            btnClassic.addActionListener((ActionEvent _) -> {
+                JFrame classicFrame = new JFrame("Rectangular Game");
+                classicFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                classicFrame.add(new GameBoardUI());
+                classicFrame.pack();
+                classicFrame.setLocationRelativeTo(null);
+                classicFrame.setVisible(true);
+                frame.dispose();
             });
-        } else {
-            System.out.println("Invalid choice. Exiting.");
-        }
+
+            JButton btnHex = new JButton("5x5 Hexagonal Version");
+            btnHex.setFont(new Font("Arial", Font.BOLD, 16));
+            btnHex.addActionListener((ActionEvent _) -> {
+                JFrame hexFrame = new JFrame("Hexagonal Game");
+                hexFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                hexFrame.add(new HexGridPanel());
+                hexFrame.pack();
+                hexFrame.setLocationRelativeTo(null);
+                hexFrame.setVisible(true);
+                frame.dispose();
+            });
+
+            frame.add(btnClassic);
+            frame.add(btnHex);
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+        });
     }
 }
