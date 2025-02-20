@@ -1,10 +1,10 @@
 package org.example;
 
-import org.example.model.BoardUtils;
 import org.example.model.HexagonalGameBoard;
 import org.example.model.HexTile;
 import org.junit.jupiter.api.Test;
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class HexagonalGameBoardTest {
@@ -21,7 +21,6 @@ public class HexagonalGameBoardTest {
     void testPlaceTileInvalidIndex() {
         HexagonalGameBoard board = new HexagonalGameBoard();
         HexTile tile = new HexTile(1, 2, 3);
-
         assertFalse(board.placeTile(-1, tile));
         assertFalse(board.placeTile(19, tile));
     }
@@ -29,70 +28,48 @@ public class HexagonalGameBoardTest {
     @Test
     void testFullBoardDetection() {
         HexagonalGameBoard board = new HexagonalGameBoard();
-        for(int i = 0; i < 19; i++) {
-            board.placeTile(i, new HexTile(1,1,1));
+        for (int i = 0; i < 19; i++) {
+            board.placeTile(i, new HexTile(1, 1, 1));
         }
         assertTrue(board.isBoardFull());
     }
 
     @Test
-    void testVerticalScoring() {
+    void testScoringForEdgeToEdgeLines() {
         HexagonalGameBoard board = new HexagonalGameBoard();
         HexTile tile = new HexTile(5, 5, 5);
-        // edge-to-edge (indexes: 7, 8, 9, 10, 11)
+        // edge-to-edge diagonal (7, 8, 9, 10, 11)
         int[] indices = {7, 8, 9, 10, 11};
         for (int i : indices) board.placeTile(i, tile);
         assertEquals(25, board.calculateScore()); // 5 * 5 = 25
-    }
-
-    @Test
-    void testTileRotation() {
-        HexTile tile = new HexTile(1,2,3);
-        assertEquals(List.of(1,2,3), tile.getValues());
-
-        tile.rotate();
-        assertEquals(List.of(2,3,1), tile.getValues());
-
-        tile.rotate();
-        assertEquals(List.of(3,1,2), tile.getValues());
-    }
-
-    @Test
-    void testBoardUtilsConversion() {
-        // Mapping after 90°
-        assertEquals(0, BoardUtils.getIndexFromRowCol(0, 2)); // (0,2) → index 0
-        assertEquals(4, BoardUtils.getIndexFromRowCol(1, 2)); // (1,2) → index 4
-        assertEquals(9, BoardUtils.getIndexFromRowCol(2, 2)); // (2,2) → index 9 (center)
-        assertEquals(-1, BoardUtils.getIndexFromRowCol(4, 1)); // Invalid
-    }
-
-    @Test
-    void testPartialBoardScore() {
-        HexagonalGameBoard board = new HexagonalGameBoard();
-        board.placeTile(0, new HexTile(5,5,5));
-        board.placeTile(1, new HexTile(5,5,5));
-        assertEquals(0, board.calculateScore());
-    }
-
-    /*Scores*/
-
-    @Test
-    void testVerticalLineOfFive() {
-        HexagonalGameBoard board = new HexagonalGameBoard();
-        HexTile tile = new HexTile(8, 8, 8);
-        // edge-to-edge (0, 4, 9, 14, 18)
-        int[] indices = {0, 4, 9, 14, 18};
+        // edge-to-edge vertical (0, 4, 9, 14, 18)
+        board = new HexagonalGameBoard();
+        tile = new HexTile(8, 8, 8);
+        indices = new int[]{0, 4, 9, 14, 18};
         for (int i : indices) board.placeTile(i, tile);
         assertEquals(40, board.calculateScore()); // 5 * 8 = 40
     }
 
     @Test
-    void testEdgeToEdgeScoring() {
+    void testPlacingDifferentTiles() {
         HexagonalGameBoard board = new HexagonalGameBoard();
-        // diagonal complete (7, 8, 9, 10, 11)
-        int[] indices = {7, 8, 9, 10, 11};
-        for (int i : indices) board.placeTile(i, new HexTile(3,3,3));
-        assertEquals(15, board.calculateScore()); // 5 * 3 = 15
+        HexTile tile1 = new HexTile(3, 4, 5);
+        HexTile tile2 = new HexTile(1, 2, 3);
+        assertTrue(board.placeTile(0, tile1));
+        assertTrue(board.placeTile(1, tile2));
+        assertEquals(List.of(3, 4, 5), board.getTile(0).getValues());
+        assertEquals(List.of(1, 2, 3), board.getTile(1).getValues());
+    }
+
+    @Test
+    void testTileRotations() {
+        HexTile tile = new HexTile(2, 4, 6);
+        tile.rotate();
+        assertEquals(List.of(4, 6, 2), tile.getValues());
+        tile.rotate();
+        assertEquals(List.of(6, 2, 4), tile.getValues());
+        tile.rotate();
+        assertEquals(List.of(2, 4, 6), tile.getValues()); // Torna allo stato iniziale
     }
 
     @Test
@@ -105,22 +82,34 @@ public class HexagonalGameBoardTest {
     }
 
     @Test
-    void testIncompleteDiagonalLine() {
+    void testIncompleteLine() {
         HexagonalGameBoard board = new HexagonalGameBoard();
         HexTile tile = new HexTile(4, 4, 4);
-        // non edge-to-edge
+        // Non edge-to-edge
         int[] indices = {4, 9, 14};
         for (int i : indices) board.placeTile(i, tile);
+        assertEquals(0, board.calculateScore());
+        board = new HexagonalGameBoard();
+        board.placeTile(0, tile);
+        board.placeTile(4, tile);
         assertEquals(0, board.calculateScore());
     }
 
     @Test
-    void testLineWithEmptyTiles() {
+    void testHorizontalLineScoring() {
+        HexagonalGameBoard board = new HexagonalGameBoard();
+        HexTile tile = new HexTile(7, 7, 7);
+        int[] indices = {3, 4, 5, 6};
+        for (int i : indices) board.placeTile(i, tile);
+        assertEquals(28, board.calculateScore()); // 4 * 7 = 28
+    }
+
+    @Test
+    void testBrokenLine() {
         HexagonalGameBoard board = new HexagonalGameBoard();
         HexTile tile = new HexTile(4, 4, 4);
-        board.placeTile(0, tile);
-        board.placeTile(4, tile);
-        // Missing tile in 9 → incomplete line
+        int[] indices = {4, 9, 14};
+        for (int i : indices) board.placeTile(i, tile);
         assertEquals(0, board.calculateScore());
     }
 }

@@ -19,7 +19,7 @@ public class HexTile {
 
     public void rotate() {
         if (!values.isEmpty()) {
-            int first = values.remove(0);
+            int first = values.removeFirst();
             values.add(first);
         }
     }

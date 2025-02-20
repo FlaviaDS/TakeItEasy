@@ -5,7 +5,7 @@ import org.example.view.HexGridPanel;
 import javax.swing.*;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main() {
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Hex Diamond");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
