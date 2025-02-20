@@ -87,18 +87,6 @@ public class HexagonalGameBoardTest {
         assertEquals(40, board.calculateScore()); // 5 * 8 = 40
     }
 
-    @Disabled
-    @Test
-    void testDiagonalLineOfThree() {
-        HexagonalGameBoard board = new HexagonalGameBoard();
-        HexTile tile = new HexTile(3, 3, 3);
-
-        // Linea diagonale EDGE-TO-EDGE (indici corretti post-rotazione)
-        int[] indices = {2, 6, 11, 15, 18}; // Esempio di linea completa
-        for (int i : indices) board.placeTile(i, tile);
-        assertEquals(15, board.calculateScore()); // 5 * 3 = 15
-    }
-
     @Test
     void testEdgeToEdgeScoring() {
         HexagonalGameBoard board = new HexagonalGameBoard();
