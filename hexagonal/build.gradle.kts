@@ -19,3 +19,11 @@ tasks.test {
 application {
     mainClass.set("org.example.Main")
 }
+
+tasks.withType<JavaCompile> {
+    options.compilerArgs.add("--enable-preview")
+}
+
+tasks.withType<JavaExec> {
+    jvmArgs = listOf("--enable-preview")
+}

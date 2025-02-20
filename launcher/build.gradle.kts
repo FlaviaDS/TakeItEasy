@@ -20,3 +20,12 @@ tasks.named<JavaExec>("run") {
     standardInput = System.`in`
 }
 
+tasks.withType<JavaCompile> {
+    options.compilerArgs.add("--enable-preview")
+}
+
+tasks.withType<JavaExec> {
+    jvmArgs = listOf("--enable-preview")
+}
+
+
