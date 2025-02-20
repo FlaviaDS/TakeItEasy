@@ -115,24 +115,6 @@ public class HexagonalGameBoardTest {
         assertEquals(0, board.calculateScore());
     }
 
-    @Disabled
-    @Test
-    void testMultipleValidLines() {
-        HexagonalGameBoard board = new HexagonalGameBoard();
-        HexTile tile1 = new HexTile(2, 2, 2);
-        HexTile tile2 = new HexTile(3, 3, 3);
-
-        // Linea verticale
-        int[] verticalIndices = {7, 8, 9, 10, 11};
-        for (int i : verticalIndices) board.placeTile(i, tile1);
-
-        // Linea diagonale
-        int[] diagonalIndices = {2, 6, 11, 15, 18};
-        for (int i : diagonalIndices) board.placeTile(i, tile2);
-
-        assertEquals(25, board.calculateScore()); // (5*2) + (5*3) = 25
-    }
-
     @Test
     void testLineWithEmptyTiles() {
         HexagonalGameBoard board = new HexagonalGameBoard();
