@@ -36,9 +36,4 @@ public record CubeCoordinates(int x, int y, int z) {
         return results;
     }
 
-    public double[] toPixel(double size) {
-        double x = (size * 3/2 * this.x()) / 2.0;
-        double y = (size * Math.sqrt(3) * (this.z() + this.x()/2.0)) / 2.0;
-        return new double[]{x, y};
-    }
 }

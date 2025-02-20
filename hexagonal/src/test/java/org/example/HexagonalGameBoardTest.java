@@ -3,7 +3,6 @@ package org.example;
 import org.example.model.BoardUtils;
 import org.example.model.HexagonalGameBoard;
 import org.example.model.HexTile;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,7 +13,7 @@ public class HexagonalGameBoardTest {
     void testPlaceTileValidIndex() {
         HexagonalGameBoard board = new HexagonalGameBoard();
         HexTile tile = new HexTile(1, 2, 3);
-        assertTrue(board.placeTile(9, tile)); // Ora restituirà true
+        assertTrue(board.placeTile(9, tile));
         assertSame(tile, board.getTile(9));
     }
 
@@ -40,7 +39,7 @@ public class HexagonalGameBoardTest {
     void testVerticalScoring() {
         HexagonalGameBoard board = new HexagonalGameBoard();
         HexTile tile = new HexTile(5, 5, 5);
-        // Linea verticale edge-to-edge (indici: 7, 8, 9, 10, 11)
+        // edge-to-edge (indexes: 7, 8, 9, 10, 11)
         int[] indices = {7, 8, 9, 10, 11};
         for (int i : indices) board.placeTile(i, tile);
         assertEquals(25, board.calculateScore()); // 5 * 5 = 25
@@ -60,11 +59,11 @@ public class HexagonalGameBoardTest {
 
     @Test
     void testBoardUtilsConversion() {
-        // Verifica la mappatura dopo rotazione di 90°
-        assertEquals(0, BoardUtils.getIndexFromRowCol(0, 2)); // (0,2) → indice 0
-        assertEquals(4, BoardUtils.getIndexFromRowCol(1, 2)); // (1,2) → indice 4
-        assertEquals(9, BoardUtils.getIndexFromRowCol(2, 2)); // (2,2) → indice 9 (centro)
-        assertEquals(-1, BoardUtils.getIndexFromRowCol(4, 1)); // Cella non valida
+        // Mapping after 90°
+        assertEquals(0, BoardUtils.getIndexFromRowCol(0, 2)); // (0,2) → index 0
+        assertEquals(4, BoardUtils.getIndexFromRowCol(1, 2)); // (1,2) → index 4
+        assertEquals(9, BoardUtils.getIndexFromRowCol(2, 2)); // (2,2) → index 9 (center)
+        assertEquals(-1, BoardUtils.getIndexFromRowCol(4, 1)); // Invalid
     }
 
     @Test
@@ -75,13 +74,13 @@ public class HexagonalGameBoardTest {
         assertEquals(0, board.calculateScore());
     }
 
-    /*Scorings*/
+    /*Scores*/
 
     @Test
     void testVerticalLineOfFive() {
         HexagonalGameBoard board = new HexagonalGameBoard();
         HexTile tile = new HexTile(8, 8, 8);
-        // Linea verticale edge-to-edge (indici originali: 0, 4, 9, 14, 18)
+        // edge-to-edge (0, 4, 9, 14, 18)
         int[] indices = {0, 4, 9, 14, 18};
         for (int i : indices) board.placeTile(i, tile);
         assertEquals(40, board.calculateScore()); // 5 * 8 = 40
@@ -90,7 +89,7 @@ public class HexagonalGameBoardTest {
     @Test
     void testEdgeToEdgeScoring() {
         HexagonalGameBoard board = new HexagonalGameBoard();
-        // Linea diagonale completa (indici originali: 7, 8, 9, 10, 11)
+        // diagonal complete (7, 8, 9, 10, 11)
         int[] indices = {7, 8, 9, 10, 11};
         for (int i : indices) board.placeTile(i, new HexTile(3,3,3));
         assertEquals(15, board.calculateScore()); // 5 * 3 = 15
@@ -101,7 +100,7 @@ public class HexagonalGameBoardTest {
         HexagonalGameBoard board = new HexagonalGameBoard();
         board.placeTile(7, new HexTile(2, 2, 2));
         board.placeTile(8, new HexTile(2, 2, 2));
-        board.placeTile(9, new HexTile(3, 3, 3)); // Valore diverso
+        board.placeTile(9, new HexTile(3, 3, 3));
         assertEquals(0, board.calculateScore());
     }
 
@@ -109,7 +108,7 @@ public class HexagonalGameBoardTest {
     void testIncompleteDiagonalLine() {
         HexagonalGameBoard board = new HexagonalGameBoard();
         HexTile tile = new HexTile(4, 4, 4);
-        // Linea non edge-to-edge (indici centrali)
+        // non edge-to-edge
         int[] indices = {4, 9, 14};
         for (int i : indices) board.placeTile(i, tile);
         assertEquals(0, board.calculateScore());
@@ -121,7 +120,7 @@ public class HexagonalGameBoardTest {
         HexTile tile = new HexTile(4, 4, 4);
         board.placeTile(0, tile);
         board.placeTile(4, tile);
-        // Manca il tile in 9 → linea incompleta
+        // Missing tile in 9 → incomplete line
         assertEquals(0, board.calculateScore());
     }
 }

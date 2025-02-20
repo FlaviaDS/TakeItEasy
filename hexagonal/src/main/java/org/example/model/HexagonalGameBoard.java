@@ -16,10 +16,10 @@ public class HexagonalGameBoard {
 
     public boolean placeTile(int index, HexTile tile) {
         if (index < 0 || index >= BOARD_SIZE || board[index] != null) {
-            return false; // Indice non valido o cella occupata
+            return false;
         }
         board[index] = tile;
-        return true; // Posizionamento riuscito
+        return true;
     }
 
     public HexTile getTile(int index) {
@@ -34,7 +34,7 @@ public class HexagonalGameBoard {
         }
         int score = 0;
 
-        // Direzioni: 0 (verticale), 1 (diagonale dx), 2 (diagonale sx)
+        // 0 (vertical), 1 (diagonal dx), 2 (diagonal sx)
         for (int dir = 0; dir < 3; dir++) {
             Set<CubeCoordinates> available = new HashSet<>(cellsMap.keySet());
             while (!available.isEmpty()) {
@@ -54,7 +54,7 @@ public class HexagonalGameBoard {
     private List<CubeCoordinates> buildLine(CubeCoordinates start, int dir, Map<CubeCoordinates, Integer> cellsMap) {
         List<CubeCoordinates> line = new ArrayList<>();
         exploreDirection(line, start, dir, cellsMap);
-        exploreDirection(line, start, dir + 3, cellsMap); // Direzione opposta
+        exploreDirection(line, start, dir + 3, cellsMap);
         return line;
     }
 
@@ -84,38 +84,4 @@ public class HexagonalGameBoard {
         return (values.size() == 1) ? line.size() * values.iterator().next() : 0;
     }
 
-    private void exploreDirection(List<CubeCoordinates> line, CubeCoordinates curr, int direction,
-                                  Set<CubeCoordinates> available, Map<CubeCoordinates, Integer> cellsMap) {
-        if (cellsMap.containsKey(curr)) {
-            line.add(curr);
-            available.remove(curr);
-            exploreDirection(line, curr.cubeNeighbor(direction), direction, available, cellsMap);
-        }
-    }
-
-    public void printAllSchemes() {
-        System.out.println("Final Score: " + calculateScore());
-        printBoardScheme(0);
-        printBoardScheme(1);
-        printBoardScheme(2);
-    }
-
-    private void printBoardScheme(int valueIndex) {
-        String[] directions = {"Vertical", "Diagonal 1", "Diagonal 2"};
-        System.out.println("\nBoard (" + directions[valueIndex] + "):");
-
-        for (int r = 0; r < 5; r++) {
-            StringBuilder row = new StringBuilder();
-            for (int c = 0; c < 5; c++) {
-                int idx = BoardUtils.getIndexFromRowCol(r, c);
-                if (idx == -1) row.append("  X  ");
-                else {
-                    HexTile tile = board[idx];
-                    row.append(tile != null ?
-                            String.format(" %2d  ", tile.getValues().get(valueIndex)) : "  .  ");
-                }
-            }
-            System.out.println(row);
-        }
-    }
 }

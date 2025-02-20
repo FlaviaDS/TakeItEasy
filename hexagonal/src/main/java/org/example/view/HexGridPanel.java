@@ -47,8 +47,8 @@ public class HexGridPanel extends JPanel {
         String[] rotations = {"0°", "120°", "240°"};
         int choice = JOptionPane.showOptionDialog(
                 this,
-                "Seleziona rotazione per:\n" + currentTile,
-                "Rotazione Tessera",
+                "Select Rotation for:\n" + currentTile,
+                "Tile Rotation",
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.PLAIN_MESSAGE,
                 null,
@@ -75,7 +75,7 @@ public class HexGridPanel extends JPanel {
         List<CubeCoordinates> coordinates = new CubeCoordinates(0, 0, 0).navigateSpiral(2);
         Point2D center = new Point2D.Double(getWidth()/2.0, getHeight()/2.0);
 
-        // Disegna la griglia ruotata di 90°
+        // print grid rotated 90°
         for (int i = 0; i < 19; i++) {
             CubeCoordinates rotatedCoord = rotateCube(coordinates.get(i));
             Point2D position = cubeToPixel(rotatedCoord, center);
@@ -90,17 +90,17 @@ public class HexGridPanel extends JPanel {
         }
     }
 
-    // Rotazione delle coordinate cubiche di 90°
+    // Rotation of cubic coordinates 90°
     private CubeCoordinates rotateCube(CubeCoordinates coord) {
         return new CubeCoordinates(-coord.z(), -coord.x(), -coord.y());
     }
 
     private Point2D cubeToPixel(CubeCoordinates coord, Point2D center) {
-        // Formula per orientamento flat-top ruotato
+        // flat-top
         double x = (double) HexGridPanel.HEX_RADIUS * (3.0/2 * coord.x());
         double y = (double) HexGridPanel.HEX_RADIUS * (SQRT3 * (coord.z() + coord.x()/2.0));
 
-        // Centraggio preciso
+        // Centering
         double totalWidth = 4 * (double) HexGridPanel.HEX_RADIUS * 1.5;
         double totalHeight = 5 * (double) HexGridPanel.HEX_RADIUS * SQRT3;
         return new Point2D.Double(
@@ -126,11 +126,11 @@ public class HexGridPanel extends JPanel {
         g2.setColor(Color.BLACK);
         g2.setFont(new Font("Arial", Font.BOLD, 14));
 
-        // Allineamento numeri per rotazione
+        // Alignment of numbers
         Point2D[] positions = {
-                new Point2D.Double(bounds.getCenterX(), bounds.getMinY() + 20),    // Alto
-                new Point2D.Double(bounds.getMaxX() - 20, bounds.getCenterY()),    // Destra
-                new Point2D.Double(bounds.getMinX() + 20, bounds.getCenterY())     // Sinistra
+                new Point2D.Double(bounds.getCenterX(), bounds.getMinY() + 20),    // top
+                new Point2D.Double(bounds.getMaxX() - 20, bounds.getCenterY()),    // right
+                new Point2D.Double(bounds.getMinX() + 20, bounds.getCenterY())     // left
         };
 
         List<Integer> values = tile.getValues();
@@ -156,8 +156,8 @@ public class HexGridPanel extends JPanel {
             int score = board.calculateScore();
             JOptionPane.showMessageDialog(
                     this,
-                    "Gioco Terminato! Punteggio: " + score,
-                    "Fine Partita",
+                    "Game Over! Score: " + score,
+                    "End Game",
                     JOptionPane.INFORMATION_MESSAGE
             );
         }
