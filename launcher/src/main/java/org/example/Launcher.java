@@ -14,34 +14,44 @@ public class Launcher {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(300, 200);
             frame.setLayout(new GridLayout(2, 1, 10, 10));
-            JButton btnClassic = new JButton("3x3 Rectangular Version");
-            btnClassic.setFont(new Font("Arial", Font.BOLD, 16));
-            btnClassic.addActionListener((ActionEvent _) -> {
-                JFrame classicFrame = new JFrame("Rectangular Game");
-                classicFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                classicFrame.add(new GameBoardUI());
-                classicFrame.pack();
-                classicFrame.setLocationRelativeTo(null);
-                classicFrame.setVisible(true);
-                frame.dispose();
-            });
 
-            JButton btnHex = new JButton("5x5 Hexagonal Version");
-            btnHex.setFont(new Font("Arial", Font.BOLD, 16));
-            btnHex.addActionListener((ActionEvent _) -> {
-                JFrame hexFrame = new JFrame("Hexagonal Game");
-                hexFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                hexFrame.add(new HexGridPanel());
-                hexFrame.pack();
-                hexFrame.setLocationRelativeTo(null);
-                hexFrame.setVisible(true);
-                frame.dispose();
-            });
+            JButton btnClassic = getJButton(frame);
+            JButton btnHex = getButton(frame);
 
             frame.add(btnClassic);
             frame.add(btnHex);
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
         });
+    }
+
+    private static JButton getButton(JFrame frame) {
+        JButton btnHex = new JButton("5x5 Hexagonal Version");
+        btnHex.setFont(new Font("Arial", Font.BOLD, 16));
+        btnHex.addActionListener((ActionEvent _) -> {
+            JFrame hexFrame = new JFrame("Hexagonal Game");
+            hexFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            hexFrame.add(new HexGridPanel());
+            hexFrame.pack();
+            hexFrame.setLocationRelativeTo(null);
+            hexFrame.setVisible(true);
+            frame.dispose();
+        });
+        return btnHex;
+    }
+
+    private static JButton getJButton(JFrame frame) {
+        JButton btnClassic = new JButton("3x3 Rectangular Version");
+        btnClassic.setFont(new Font("Arial", Font.BOLD, 16));
+        btnClassic.addActionListener((ActionEvent _) -> {
+            JFrame classicFrame = new JFrame("Rectangular Game");
+            classicFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            classicFrame.add(new GameBoardUI());
+            classicFrame.pack();
+            classicFrame.setLocationRelativeTo(null);
+            classicFrame.setVisible(true);
+            frame.dispose();
+        });
+        return btnClassic;
     }
 }

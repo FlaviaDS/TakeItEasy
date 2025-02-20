@@ -1,27 +1,31 @@
 package org.example.model;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HexTile {
-    private final int[] values;
+    private final List<Integer> values;
 
     public HexTile(int v1, int v2, int v3) {
-        values = new int[]{v1, v2, v3};
+        values = new ArrayList<>();
+        values.add(v1);
+        values.add(v2);
+        values.add(v3);
+    }
+
+    public List<Integer> getValues() {
+        return values;
     }
 
     public void rotate() {
-        int temp = values[0];
-        values[0] = values[1];
-        values[1] = values[2];
-        values[2] = temp;
-    }
-
-    public int[] getValues() {
-        return values;
+        if (!values.isEmpty()) {
+            int first = values.removeFirst();
+            values.add(first);
+        }
     }
 
     @Override
     public String toString() {
-        return Arrays.toString(values);
+        return values.toString();
     }
 }

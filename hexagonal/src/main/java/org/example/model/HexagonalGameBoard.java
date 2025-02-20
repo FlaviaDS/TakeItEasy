@@ -1,126 +1,121 @@
 package org.example.model;
 
+import java.util.*;
+
+
 public class HexagonalGameBoard {
-    private final int rows = 5;
-    private final int cols = 5;
-    private final HexTile[][] board;
-    private final boolean[][] validMask;
-    private static final int[][] VALID_COLUMNS = {
-            {2, 3, 4},      // Row 0
-            {1, 2, 3, 4},   // Row 1
-            {0, 1, 2, 3, 4},// Row 2
-            {1, 2, 3, 4},   // Row 3
-            {2, 3, 4}       // Row 4
-    };
+    private static final int BOARD_SIZE = 19;
+    private final HexTile[] board = new HexTile[BOARD_SIZE];
 
-    public HexagonalGameBoard() {
-        board = new HexTile[rows][cols];
-        validMask = new boolean[rows][cols];
-        for (int j = 2; j <= 4; j++) validMask[0][j] = true;
-        for (int j = 1; j <= 4; j++) validMask[1][j] = true;
-        for (int j = 0; j < cols; j++) validMask[2][j] = true;
-        for (int j = 1; j <= 4; j++) validMask[3][j] = true;
-        for (int j = 2; j <= 4; j++) validMask[4][j] = true;
-    }
-
-    public boolean isValidPosition(int row, int col) {
-        return row >= 0 && row < rows && col >= 0 && col < cols && validMask[row][col];
-    }
-
-    public boolean placeTile(int row, int col, HexTile tile) {
-        if (!isValidPosition(row, col) || board[row][col] != null) return false;
-        board[row][col] = tile;
-        return true;
-    }
-
-    public HexTile getTile(int row, int col) {
-        return isValidPosition(row, col) ? board[row][col] : null;
-    }
-
-    public int getTileValue(int row, int col) {
-        if (!isValidPosition(row, col)) return -1;
-        return board[row][col] != null ? board[row][col].getValues()[0] : 0;
-    }
-
-    public boolean checkGameOver() {
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                if (validMask[i][j] && board[i][j] == null)
-                    return false;
-            }
+    public boolean isBoardFull() {
+        for (HexTile tile : board) {
+            if (tile == null) return false;
         }
         return true;
     }
 
-    public void printBoard() {
-        System.out.println("Current Board:");
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                if (!validMask[i][j])
-                    System.out.print("X  ");
-                else {
-                    HexTile tile = board[i][j];
-                    System.out.print((tile != null ? tile.getValues()[0] : ".") + "  ");
-                }
-            }
-            System.out.println();
+    public boolean placeTile(int index, HexTile tile) {
+        if (index < 0 || index >= BOARD_SIZE || board[index] != null) {
+            return false; // Indice non valido o cella occupata
         }
+        board[index] = tile;
+        return true; // Posizionamento riuscito
+    }
+
+    public HexTile getTile(int index) {
+        return (index >= 0 && index < BOARD_SIZE) ? board[index] : null;
     }
 
     public int calculateScore() {
+        List<CubeCoordinates> coords = new CubeCoordinates(0, 0, 0).navigateSpiral(2);
+        Map<CubeCoordinates, Integer> cellsMap = new HashMap<>();
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            cellsMap.put(coords.get(i), i);
+        }
         int score = 0;
-        // Consider directions: vertical, diagonal down-right, diagonal down-left.
-        int[][] directions = {
-                {1, 0},
-                {1, 1},
-                {1, -1}
-        };
 
-        System.out.println("===== Calculating Score (edge-to-edge) =====");
-        for (int[] d : directions) {
-            int dr = d[0], dc = d[1];
-            for (int r = 0; r < rows; r++) {
-                for (int c = 0; c < cols; c++) {
-                    if (!isValidPosition(r, c)) continue;
-                    int prevR = r - dr, prevC = c - dc;
-                    // The start cell must be at the edge: previous cell out-of-bounds or empty.
-                    boolean startEdge = !isValidPosition(prevR, prevC) || getTileValue(prevR, prevC) == 0;
-                    if (!startEdge) continue;
-                    int commonValue = getTileValue(r, c);
-                    if (commonValue == 0) continue;
-                    int length = 0;
-                    int curR = r, curC = c;
-                    StringBuilder lineCoords = new StringBuilder();
-                    while (isValidPosition(curR, curC) && getTileValue(curR, curC) == commonValue) {
-                        length++;
-                        lineCoords.append("(").append(curR).append(",").append(curC).append(") ");
-                        curR += dr;
-                        curC += dc;
-                    }
-                    int lastR = curR - dr, lastC = curC - dc;
-                    // The line is complete if both start and last cells are borders.
-                    boolean complete = isBorderCell(r, c) && isBorderCell(lastR, lastC);
-                    System.out.println("Checking line from (" + r + "," + c + ") with value "
-                            + commonValue + ": " + lineCoords + " length=" + length + " complete=" + complete);
-                    if (length >= 3 && complete) {
-                        int lineScore = length * commonValue;
-                        score += lineScore;
-                        System.out.println("Scored " + lineScore + " points from line: " + lineCoords);
-                    }
+        // Direzioni: 0 (verticale), 1 (diagonale dx), 2 (diagonale sx)
+        for (int dir = 0; dir < 3; dir++) {
+            Set<CubeCoordinates> available = new HashSet<>(cellsMap.keySet());
+            while (!available.isEmpty()) {
+                CubeCoordinates picked = available.iterator().next();
+                List<CubeCoordinates> line = buildLine(picked, dir, cellsMap);
+
+                if (isEdgeToEdge(line)) {
+                    int lineScore = calculateLineScore(line, dir, cellsMap);
+                    score += lineScore;
                 }
+                line.forEach(available::remove);
             }
         }
-        System.out.println("===== Final Score: " + score + " =====");
-        printBoard();
         return score;
     }
 
-    private boolean isBorderCell(int row, int col) {
-        if (!isValidPosition(row, col)) return false;
-        if (row == 0 || row == rows - 1) return true;
-        int[] valid = VALID_COLUMNS[row];
-        int min = valid[0];
-        int max = valid[valid.length - 1];
-        return col == min || col == max;
+    private List<CubeCoordinates> buildLine(CubeCoordinates start, int dir, Map<CubeCoordinates, Integer> cellsMap) {
+        List<CubeCoordinates> line = new ArrayList<>();
+        exploreDirection(line, start, dir, cellsMap);
+        exploreDirection(line, start, dir + 3, cellsMap); // Direzione opposta
+        return line;
+    }
+
+    private void exploreDirection(List<CubeCoordinates> line, CubeCoordinates curr, int dir, Map<CubeCoordinates, Integer> cellsMap) {
+        if (cellsMap.containsKey(curr) && !line.contains(curr)) {
+            line.add(curr);
+            exploreDirection(line, curr.cubeNeighbor(dir), dir, cellsMap);
+        }
+    }
+
+    private boolean isEdgeToEdge(List<CubeCoordinates> line) {
+        if (line.size() < 3) return false;
+        return isOnEdge(line.getFirst()) && isOnEdge(line.getLast());
+    }
+
+    private boolean isOnEdge(CubeCoordinates coord) {
+        return Math.abs(coord.x()) == 2 || Math.abs(coord.y()) == 2 || Math.abs(coord.z()) == 2;
+    }
+
+    private int calculateLineScore(List<CubeCoordinates> line, int dir, Map<CubeCoordinates, Integer> cellsMap) {
+        Set<Integer> values = new HashSet<>();
+        for (CubeCoordinates cc : line) {
+            HexTile tile = board[cellsMap.get(cc)];
+            if (tile == null) return 0;
+            values.add(tile.getValues().get(dir % 3));
+        }
+        return (values.size() == 1) ? line.size() * values.iterator().next() : 0;
+    }
+
+    private void exploreDirection(List<CubeCoordinates> line, CubeCoordinates curr, int direction,
+                                  Set<CubeCoordinates> available, Map<CubeCoordinates, Integer> cellsMap) {
+        if (cellsMap.containsKey(curr)) {
+            line.add(curr);
+            available.remove(curr);
+            exploreDirection(line, curr.cubeNeighbor(direction), direction, available, cellsMap);
+        }
+    }
+
+    public void printAllSchemes() {
+        System.out.println("Final Score: " + calculateScore());
+        printBoardScheme(0);
+        printBoardScheme(1);
+        printBoardScheme(2);
+    }
+
+    private void printBoardScheme(int valueIndex) {
+        String[] directions = {"Vertical", "Diagonal 1", "Diagonal 2"};
+        System.out.println("\nBoard (" + directions[valueIndex] + "):");
+
+        for (int r = 0; r < 5; r++) {
+            StringBuilder row = new StringBuilder();
+            for (int c = 0; c < 5; c++) {
+                int idx = BoardUtils.getIndexFromRowCol(r, c);
+                if (idx == -1) row.append("  X  ");
+                else {
+                    HexTile tile = board[idx];
+                    row.append(tile != null ?
+                            String.format(" %2d  ", tile.getValues().get(valueIndex)) : "  .  ");
+                }
+            }
+            System.out.println(row);
+        }
     }
 }

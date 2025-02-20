@@ -1,211 +1,165 @@
 package org.example.view;
 
-import org.example.model.HexTile;
-import org.example.model.HexagonalGameBoard;
-
+import org.example.model.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Point2D;
+import java.util.List;
 
-/**
- * HexGridPanel arranges 19 cells (3-4-5-4-3) in a diamond shape (pointy‑top),
- * then rotates the entire diamond 90° anticlockwise by computing the final positions
- * of each cell relative to the panel center.
- * In this approach, the polygons are built in their final coordinates so that click detection works correctly.
- */
 public class HexGridPanel extends JPanel {
-    private static final int ROWS = 5;
-    private static final int COLS = 5;
-
-    // VALID_COLUMNS: valid column indices for each row (diamond shape)
-    private static final int[][] VALID_COLUMNS = {
-            {2, 3, 4},      // Row 0: 3 cells
-            {1, 2, 3, 4},   // Row 1: 4 cells
-            {0, 1, 2, 3, 4},// Row 2: 5 cells
-            {1, 2, 3, 4},   // Row 3: 4 cells
-            {2, 3, 4}       // Row 4: 3 cells
-    };
-
-    /**
-     * ROW_OFFSETS: horizontal offsets (in "cell units") for each row in the unrotated grid.
-     * For a row with 5 possible cell positions:
-     * - Row 0 (3 cells): offset = (5-3)/2 = 1.0
-     * - Row 1 (4 cells): offset = (5-4)/2 = 0.5
-     * - Row 2 (5 cells): offset = 0.0
-     * - Row 3 (4 cells): offset = 0.5
-     * - Row 4 (3 cells): offset = 1.0
-     */
-    private static final double[] ROW_OFFSETS = {1.0, 0.5, 0.0, 0.5, 1.0};
-
-    private final HexagonalGameBoard board;
-    private Polygon[][] hexPolys; // Final computed polygons in data space
+    private static final int HEX_RADIUS = 40;
+    private static final double SQRT3 = Math.sqrt(3);
+    private final HexagonalGameBoard board = new HexagonalGameBoard();
+    private final Polygon[] hexagons = new Polygon[19];
+    private HexTile currentTile;
 
     public HexGridPanel() {
-        board = new HexagonalGameBoard();
-        setPreferredSize(new Dimension(600, 600));
+        setPreferredSize(new Dimension(800, 800));
+        setBackground(new Color(240, 240, 240));
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                processClick(e.getX(), e.getY());
+                handleClick(e.getX(), e.getY());
             }
         });
     }
 
-    /**
-     * processClick uses the final computed polygons (in final coordinates)
-     * to detect a click and place a tile.
-     */
-    private void processClick(int x, int y) {
-        if (hexPolys == null) return;
-        for (int r = 0; r < ROWS; r++) {
-            for (int c = 0; c < COLS; c++) {
-                if (!board.isValidPosition(r, c)) continue;
-                Polygon poly = hexPolys[r][c];
-                if (poly != null && poly.contains(x, y)) {
-                    placeTileAt(r, c);
-                    repaint();
-                    if (board.checkGameOver()) {
-                        int finalScore = board.calculateScore();
-                        board.printBoard();
-                        JOptionPane.showMessageDialog(this, "Game Over! Score = " + finalScore);
-                    }
-                    return;
-                }
+    private void handleClick(int x, int y) {
+        for (int i = 0; i < 19; i++) {
+            if (hexagons[i] != null && hexagons[i].contains(x, y)) {
+                placeTile(i);
+                repaint();
+                checkGameOver();
+                return;
             }
         }
     }
 
-    private void placeTileAt(int row, int col) {
-        HexTile tile = generateRandomTile();
-        String[] rotationOptions = {"0°", "120°", "240°"};
+    private void placeTile(int index) {
+        if (board.getTile(index) != null) return;
+
+        if (currentTile == null) {
+            currentTile = generateRandomTile();
+        }
+
+        String[] rotations = {"0°", "120°", "240°"};
         int choice = JOptionPane.showOptionDialog(
                 this,
-                "Choose tile rotation:\n" + tile,
-                "Tile Rotation",
-                JOptionPane.YES_NO_CANCEL_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
+                "Seleziona rotazione per:\n" + currentTile,
+                "Rotazione Tessera",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.PLAIN_MESSAGE,
                 null,
-                rotationOptions,
-                rotationOptions[0]
+                rotations,
+                rotations[0]
         );
-        for (int i = 0; i < choice; i++) {
-            tile.rotate();
+
+        if (choice < 0 || choice > 2) {
+            currentTile = null;
+            return;
         }
-        if (!board.placeTile(row, col, tile)) {
-            JOptionPane.showMessageDialog(this, "Invalid move (occupied or out of bounds).");
-        }
+
+        for (int i = 0; i < choice; i++) currentTile.rotate();
+        board.placeTile(index, currentTile);
+        currentTile = null;
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        hexPolys = computePolygonsFinal();
         Graphics2D g2 = (Graphics2D) g;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        for (int r = 0; r < ROWS; r++) {
-            for (int c = 0; c < COLS; c++) {
-                if (!board.isValidPosition(r, c)) continue;
-                Polygon poly = hexPolys[r][c];
-                if (poly == null) continue;
+        List<CubeCoordinates> coordinates = new CubeCoordinates(0, 0, 0).navigateSpiral(2);
+        Point2D center = new Point2D.Double(getWidth()/2.0, getHeight()/2.0);
 
-                g2.setColor(new Color(255, 240, 150));
-                g2.fill(poly);
+        // Disegna la griglia ruotata di 90°
+        for (int i = 0; i < 19; i++) {
+            CubeCoordinates rotatedCoord = rotateCube(coordinates.get(i));
+            Point2D position = cubeToPixel(rotatedCoord, center);
+            hexagons[i] = createHexagon(position.getX(), position.getY());
 
-                g2.setColor(Color.DARK_GRAY);
-                g2.draw(poly);
+            g2.setColor(board.getTile(i) != null ? new Color(255, 255, 200) : new Color(200, 220, 255));
+            g2.fill(hexagons[i]);
+            g2.setColor(new Color(80, 80, 80));
+            g2.draw(hexagons[i]);
 
-                HexTile tile = board.getTile(r, c);
-                if (tile != null) {
-                    drawTileNumbers(g2, poly.getBounds(), tile);
-                }
-            }
+            if (board.getTile(i) != null) drawTileNumbers(g2, hexagons[i], board.getTile(i));
         }
     }
 
-
-    private void drawTileNumbers(Graphics2D g2, Rectangle bounds, HexTile tile) {
-        int[] values = tile.getValues();
-        g2.getFontMetrics();
-        int cx = bounds.x + bounds.width / 2;
-        int cy = bounds.y + bounds.height / 2;
-        g2.setColor(Color.BLACK);
-        g2.drawString(String.valueOf(values[0]), cx - 10, cy - 20);
-        g2.drawString(String.valueOf(values[1]), cx + 10, cy + 10);
-        g2.drawString(String.valueOf(values[2]), cx - 30, cy + 10);
+    // Rotazione delle coordinate cubiche di 90°
+    private CubeCoordinates rotateCube(CubeCoordinates coord) {
+        return new CubeCoordinates(-coord.z(), -coord.x(), -coord.y());
     }
 
-    /**
-     * Computes the final polygons for the grid.
-     * The method:
-     * 1. Computes the unrotated cell centers in a local coordinate system.
-     * 2. Computes the diamond center as the center of the cell (2,2) in unrotated space.
-     * 3. For each valid cell, calculates its delta from the diamond center.
-     * 4. Rotates the delta by 90° anticlockwise.
-     * 5. Adds the rotated delta to the panel center to obtain the final cell center.
-     * 6. Creates the hexagon polygon for that final center.
-     */
-    private Polygon[][] computePolygonsFinal() {
-        Polygon[][] polys = new Polygon[ROWS][COLS];
-        int panelW = getWidth();
-        int panelH = getHeight();
+    private Point2D cubeToPixel(CubeCoordinates coord, Point2D center) {
+        // Formula per orientamento flat-top ruotato
+        double x = (double) HexGridPanel.HEX_RADIUS * (3.0/2 * coord.x());
+        double y = (double) HexGridPanel.HEX_RADIUS * (SQRT3 * (coord.z() + coord.x()/2.0));
 
-        // Use a divisor to determine hexagon size (experiment to adjust)
-        double radius = Math.min(panelW, panelH) / 12.0;
-        double hs = radius * Math.sqrt(3); // horizontal spacing per cell unit
-        double vs = radius * 1.5;          // vertical spacing per row
-
-        // Compute unrotated positions in a local coordinate system (without fixed pixel offsets)
-        // For each row r and each valid cell index k (0-based within that row)
-        // The local center = ( (ROW_OFFSETS[r] + k) * hs, r * vs )
-        // Diamond center: For row 2 (which has 5 cells) the center cell is the 3rd cell (k=2).
-        double diamondCenterX = (ROW_OFFSETS[2] + 2) * hs;
-        double diamondCenterY = 2 * vs;
-        // Panel center:
-        double panelCenterX = panelW / 2.0;
-        double panelCenterY = panelH / 2.0;
-
-        for (int r = 0; r < ROWS; r++) {
-            int[] validCols = VALID_COLUMNS[r];
-            for (int k = 0; k < validCols.length; k++) {
-                int c = validCols[k];
-                // Unrotated local center for this cell:
-                double localX = (ROW_OFFSETS[r] + k) * hs;
-                double localY = r * vs;
-                // Delta from diamond center:
-                double deltaX = localX - diamondCenterX;
-                double deltaY = localY - diamondCenterY;
-                // Rotate delta by 90° anticlockwise: newDelta = (-deltaY, deltaX)
-                double rotatedDeltaX = -deltaY;
-                // Final cell center = panel center + rotated delta
-                double finalX = panelCenterX + rotatedDeltaX;
-                double finalY = panelCenterY + deltaX;
-                polys[r][c] = createHexPolygon(finalX, finalY, radius);
-            }
-        }
-        return polys;
+        // Centraggio preciso
+        double totalWidth = 4 * (double) HexGridPanel.HEX_RADIUS * 1.5;
+        double totalHeight = 5 * (double) HexGridPanel.HEX_RADIUS * SQRT3;
+        return new Point2D.Double(
+                center.getX() + x - totalWidth/2 + (double) HexGridPanel.HEX_RADIUS,
+                center.getY() + y - totalHeight/2 + (double) HexGridPanel.HEX_RADIUS * 0.8
+        );
     }
 
-    /**
-     * Creates a pointy-top hexagon polygon centered at (cx, cy) with radius r.
-     * Orientation: angle = 60*i - 30 (top vertex at (cx, cy - r)).
-     */
-    private Polygon createHexPolygon(double cx, double cy, double r) {
+    private Polygon createHexagon(double centerX, double centerY) {
         Polygon hex = new Polygon();
         for (int i = 0; i < 6; i++) {
-            double angleDeg = 60 * i;
-            double angleRad = Math.toRadians(angleDeg);
-            double x = cx + r * Math.cos(angleRad);
-            double y = cy + r * Math.sin(angleRad);
-            hex.addPoint((int) x, (int) y);
+            double angle = Math.toRadians(60 * i); // Flat-top
+            hex.addPoint(
+                    (int) (centerX + (double) HexGridPanel.HEX_RADIUS * Math.cos(angle)),
+                    (int) (centerY + (double) HexGridPanel.HEX_RADIUS * Math.sin(angle))
+            );
         }
         return hex;
     }
 
+    private void drawTileNumbers(Graphics2D g2, Polygon hex, HexTile tile) {
+        Rectangle bounds = hex.getBounds();
+        g2.setColor(Color.BLACK);
+        g2.setFont(new Font("Arial", Font.BOLD, 14));
+
+        // Allineamento numeri per rotazione
+        Point2D[] positions = {
+                new Point2D.Double(bounds.getCenterX(), bounds.getMinY() + 20),    // Alto
+                new Point2D.Double(bounds.getMaxX() - 20, bounds.getCenterY()),    // Destra
+                new Point2D.Double(bounds.getMinX() + 20, bounds.getCenterY())     // Sinistra
+        };
+
+        List<Integer> values = tile.getValues();
+        for (int i = 0; i < 3; i++) {
+            g2.drawString(
+                    String.valueOf(values.get(i)),
+                    (int) positions[i].getX(),
+                    (int) positions[i].getY()
+            );
+        }
+    }
+
     private HexTile generateRandomTile() {
-        int v1 = (int) (Math.random() * 9) + 1;
-        int v2 = (int) (Math.random() * 9) + 1;
-        int v3 = (int) (Math.random() * 9) + 1;
-        return new HexTile(v1, v2, v3);
+        return new HexTile(
+                (int) (Math.random() * 5) + 1,
+                (int) (Math.random() * 5) + 1,
+                (int) (Math.random() * 5) + 1
+        );
+    }
+
+    private void checkGameOver() {
+        if (board.isBoardFull()) {
+            int score = board.calculateScore();
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Gioco Terminato! Punteggio: " + score,
+                    "Fine Partita",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+        }
     }
 }
