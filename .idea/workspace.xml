@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="006acda8-adef-491f-80b1-6b7a95eadc83" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/classic/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/classic/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hexagonal/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/hexagonal/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/launcher/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/launcher/build.gradle.kts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Project_TIE_new" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/test/java/org/example/GameBoardTest.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2sJCz2xavOkpGrVtmspSx6q87kX" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.GameBoardTest (1).executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.GameBoardTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.HexagonalGameBoardTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.HexagonalGameBoardTest.testBoardFullDetection.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.HexagonalGameBoardTest.testBoardUtilsConversion.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.HexagonalGameBoardTest.testCalculateScoreDiagonalLineIncomplete.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.HexagonalGameBoardTest.testCalculateScoreDiagonalLineOfFour.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.HexagonalGameBoardTest.testCalculateScoreDiagonalLineOfThree.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.HexagonalGameBoardTest.testCalculateScoreIncompleteVerticalLine.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.HexagonalGameBoardTest.testCalculateScoreIntersection.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.HexagonalGameBoardTest.testCalculateScoreMultipleLines.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.HexagonalGameBoardTest.testCalculateScoreVerticalLineIncomplete.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.HexagonalGameBoardTest.testCalculateScoreVerticalLineOfFive.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.HexagonalGameBoardTest.testCalculateScoreVerticalLineOfFour.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.HexagonalGameBoardTest.testCalculateScoreVerticalLineOfThree.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.HexagonalGameBoardTest.testCalculateScoreVerticalLineOfThreeValid.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.HexagonalGameBoardTest.testCheckGameOver.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.HexagonalGameBoardTest.testDiagonalLineOfThree.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.HexagonalGameBoardTest.testEdgeToEdgeScoring.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.HexagonalGameBoardTest.testFullBoardDetection.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.HexagonalGameBoardTest.testGetTileValue.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.HexagonalGameBoardTest.testIncompleteLine.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.HexagonalGameBoardTest.testInvalidIndices.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.HexagonalGameBoardTest.testLineWithEmptyTiles.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.HexagonalGameBoardTest.testMixedValuesInLine.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.HexagonalGameBoardTest.testMultipleValidLines.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.HexagonalGameBoardTest.testPartialBoardNotGameOver.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.HexagonalGameBoardTest.testPartialBoardScore.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.HexagonalGameBoardTest.testPlaceTile.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.HexagonalGameBoardTest.testPlaceTileInvalidIndex.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.HexagonalGameBoardTest.testPlaceTileValidIndex.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.HexagonalGameBoardTest.testTileRotation.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.HexagonalGameBoardTest.testValidMask.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.HexagonalGameBoardTest.testVerticalLineOfFive.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.HexagonalGameBoardTest.testVerticalLineScoring.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.HexagonalGameBoardTest.testVerticalScoring.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Project_TIE_new [:org.example.GameBoardUI.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Project_TIE_new [:org.example.Main.main()].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.preview.features.used&quot;: &quot;true&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_directory_selection&quot;: &quot;C:/Users/YOGA/IdeaProjects/Project_TIE_new/hexagonal/src/main/java/org/example/model&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.stylelint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.stylelint&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/YOGA/IdeaProjects/Project_TIE_new/launcher/src/main/java/org/example/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.qodana&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="QodanaReportsService">
+    <option name="descriptions">
+      <ReportDescription localRun="true" path="C:\Users\YOGA\AppData\Local\Temp\qodana_output\qodana.sarif.json" reportGuid="f7652423-bd34-4210-90dd-69190a871289" reportId="Project_TIE_new/qodana/2025-02-17" />
+    </option>
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\YOGA\IdeaProjects\Project_TIE_new\classic" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Gradle.HexagonalGameBoardTest">
+    <configuration name="HexagonalGameBoardTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":hexagonal:test" />
+            <option value="--tests" />
+            <option value="&quot;org.example.HexagonalGameBoardTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="HexagonalGameBoardTest.testDiagonalLineOfThree" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":hexagonal:test" />
+            <option value="--tests" />
+            <option value="&quot;org.example.HexagonalGameBoardTest.testDiagonalLineOfThree&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="HexagonalGameBoardTest.testEdgeToEdgeScoring" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":hexagonal:test" />
+            <option value="--tests" />
+            <option value="&quot;org.example.HexagonalGameBoardTest.testEdgeToEdgeScoring&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="HexagonalGameBoardTest.testMultipleValidLines" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":hexagonal:test" />
+            <option value="--tests" />
+            <option value="&quot;org.example.HexagonalGameBoardTest.testMultipleValidLines&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="HexagonalGameBoardTest.testVerticalLineOfFive" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":hexagonal:test" />
+            <option value="--tests" />
+            <option value="&quot;org.example.HexagonalGameBoardTest.testVerticalLineOfFive&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.HexagonalGameBoardTest" />
+        <item itemvalue="Gradle.HexagonalGameBoardTest.testMultipleValidLines" />
+        <item itemvalue="Gradle.HexagonalGameBoardTest.testDiagonalLineOfThree" />
+        <item itemvalue="Gradle.HexagonalGameBoardTest.testEdgeToEdgeScoring" />
+        <item itemvalue="Gradle.HexagonalGameBoardTest.testVerticalLineOfFive" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.24978.46" />
+        <option value="bundled-js-predefined-d6986cc7102b-76f8388c3a79-JavaScript-IU-243.24978.46" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="006acda8-adef-491f-80b1-6b7a95eadc83" name="Changes" comment="" />
+      <created>1738164552608</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1738164552608</updated>
+      <workItem from="1738164553734" duration="4241000" />
+      <workItem from="1738169613584" duration="4298000" />
+      <workItem from="1738350704227" duration="2921000" />
+      <workItem from="1738402781234" duration="61000" />
+      <workItem from="1738403189302" duration="14261000" />
+      <workItem from="1738950946831" duration="15268000" />
+      <workItem from="1739375673018" duration="5830000" />
+      <workItem from="1739381751753" duration="58000" />
+      <workItem from="1739454643639" duration="11811000" />
+      <workItem from="1739722552610" duration="44262000" />
+      <workItem from="1739897408641" duration="9166000" />
+      <workItem from="1739961380851" duration="43639000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/hexagonal/src/main/java/org/example/model/HexTile.java</url>
+          <line>21</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Project_TIE_new$GameBoardTest__1_.ic" NAME="GameBoardTest (1) Coverage Results" MODIFIED="1738169082194" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+  </component>
+</project>

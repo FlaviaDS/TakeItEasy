@@ -19,12 +19,3 @@ tasks.test {
 application {
     mainClass.set("org.example.Main")
 }
-
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(23))
-    }
-}
-
-
-
