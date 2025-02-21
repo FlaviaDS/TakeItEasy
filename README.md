@@ -54,7 +54,7 @@ Example: If a **completed path** of **5 tiles** contains the number **8**, the p
 
 ![Game Screenshot](Score.png)
 
-in the image, the score is 7*3 + 1*3 + 5*4 = 44.
+in the image, the score is 7 * 3 + 1 * 3 + 5 * 4 = 44.
 
 ---
 
