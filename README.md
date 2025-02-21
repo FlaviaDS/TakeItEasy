@@ -128,4 +128,4 @@ This project is licensed under the **MIT License**. It is for educational purpos
 
 ## Future Improvements
 - **Multiplayer mode**
-- **More UI enhancements**
+- **More UI improvements**
