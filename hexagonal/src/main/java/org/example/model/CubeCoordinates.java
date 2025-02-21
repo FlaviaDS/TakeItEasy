@@ -23,7 +23,6 @@ public record CubeCoordinates(int x, int y, int z) {
         return new CubeCoordinates(x + d.x(), y + d.y(), z + d.z());
     }
 
-
     public List<CubeCoordinates> navigateSpiral(int radius) {
         List<CubeCoordinates> results = new ArrayList<>();
         for (int dx = -radius; dx <= radius; dx++) {
@@ -34,5 +33,4 @@ public record CubeCoordinates(int x, int y, int z) {
         }
         return results;
     }
-
 }

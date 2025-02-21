@@ -1,6 +1,8 @@
 package org.example.view;
-import org.example.model.*;
-import org.example.utils.TileLoader;
+
+import org.example.control.GameController;
+import org.example.model.HexTile;
+import org.example.model.CubeCoordinates;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
@@ -15,16 +17,13 @@ import java.util.HashMap;
 public class HexGridPanel extends JPanel {
     private static final double SQRT3 = Math.sqrt(3);
     private int hexRadius = 40;
-
-    private final HexagonalGameBoard board = new HexagonalGameBoard();
+    private final GameController controller;
     private final Polygon[] hexagons = new Polygon[19];
-    private HexTile currentTile;
 
     public HexGridPanel() {
         setPreferredSize(new Dimension(900, 800));
         setBackground(new Color(240, 240, 240));
-
-        TileLoader.loadTiles();
+        controller = new GameController();
 
         addMouseListener(new MouseAdapter() {
             @Override
@@ -41,34 +40,24 @@ public class HexGridPanel extends JPanel {
             }
         });
 
-        SwingUtilities.invokeLater(() -> {
-            currentTile = TileLoader.drawTile();
-            repaint();
-        });
+        repaint();
     }
 
     private void updateHexSize() {
         int minSize = Math.min(getWidth(), getHeight());
-        hexRadius = minSize / 15; // 🔹 Scale
+        hexRadius = minSize / 15;
     }
 
     private void handleClick(int x, int y) {
         for (int i = 0; i < 19; i++) {
             if (hexagons[i] != null && hexagons[i].contains(x, y)) {
-                placeTile(i);
-                repaint();
-                checkGameOver();
+                if (controller.placeTile(i)) {
+                    repaint();
+                    checkGameOver();
+                }
                 return;
             }
         }
-    }
-
-    private void placeTile(int index) {
-        if (board.getTile(index) != null) return;
-
-        board.placeTile(index, currentTile);
-        currentTile = TileLoader.drawTile();
-        repaint();
     }
 
     @Override
@@ -84,27 +73,27 @@ public class HexGridPanel extends JPanel {
             CubeCoordinates rotatedCoord = rotateCube(coordinates.get(i));
             Point2D position = cubeToPixel(rotatedCoord, center);
             hexagons[i] = createHexagon(position.getX(), position.getY());
-
-            g2.setColor(board.getTile(i) != null ? new Color(255, 255, 200) : new Color(200, 220, 255));
+            g2.setColor(controller.getTileAt(i) != null ? new Color(255, 255, 200) : new Color(200, 220, 255));
             g2.fill(hexagons[i]);
             g2.setColor(new Color(80, 80, 80));
             g2.draw(hexagons[i]);
 
-            if (board.getTile(i) != null) drawTileNumbers(g2, hexagons[i], board.getTile(i));
+            if (controller.getTileAt(i) != null) drawTileNumbers(g2, hexagons[i], controller.getTileAt(i));
         }
+        drawCurrentTilePreview(g2);
+    }
 
-        if (currentTile != null) {
-            int sideX = getWidth() - hexRadius * 4;
-            int sideY = getHeight() / 2 - hexRadius;
-
-            Polygon previewHex = createHexagon(sideX, sideY);
-            g2.setColor(new Color(255, 255, 200));
-            g2.fill(previewHex);
-            g2.setColor(new Color(80, 80, 80));
-            g2.draw(previewHex);
-
-            drawTileNumbers(g2, previewHex, currentTile);
-        }
+    private void drawCurrentTilePreview(Graphics2D g2) {
+        HexTile currentTile = controller.getNextTile();
+        if (currentTile == null) return;
+        int sideX = getWidth() - hexRadius * 4;
+        int sideY = getHeight() / 2 - hexRadius;
+        Polygon previewHex = createHexagon(sideX, sideY);
+        g2.setColor(new Color(255, 255, 200));
+        g2.fill(previewHex);
+        g2.setColor(new Color(80, 80, 80));
+        g2.draw(previewHex);
+        drawTileNumbers(g2, previewHex, currentTile);
     }
 
     private CubeCoordinates rotateCube(CubeCoordinates coord) {
@@ -173,8 +162,8 @@ public class HexGridPanel extends JPanel {
     }
 
     private void checkGameOver() {
-        if (board.isBoardFull()) {
-            int score = board.calculateScore();
+        if (controller.isGameOver()) {
+            int score = controller.getScore();
             JOptionPane.showMessageDialog(
                     this,
                     "Game Over! Score: " + score,
