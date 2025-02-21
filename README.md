@@ -22,11 +22,11 @@ Make sure you have at least **Java 21** and at least **Gradle 8.0** installed on
 ### Run the Game
 #### Windows
 ```sh
- ./gradlew.bat run
+ ./gradlew.bat :launcher:run
 ```
 #### Linux and macOS
 ```sh
- ./gradlew run
+ ./gradlew :launcher:run
 ```
 
 ---
