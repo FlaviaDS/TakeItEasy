@@ -1,6 +1,6 @@
 # Take It Easy - Java Implementation
 
-## 🏆The game
+## The game
 
 This is a simplified version of the board game **"Take It Easy"** by Peter Burley, written in **Java**. The project follows the **Model-View-Controller (MVC) pattern**, designed for **educational purposes** and game enthusiasts who enjoy logic and strategy-based board games.
 
@@ -122,7 +122,7 @@ This project is licensed under the **MIT License**. It is for educational purpos
 ---
 
 ## Contributors
-- **[Flavia De Santis]** - Developer
+- **Flavia De Santis**
 
 ---
 
