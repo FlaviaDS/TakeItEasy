@@ -31,11 +31,15 @@ Make sure you have at least **Java 21** and at least **Gradle 8.0** installed on
 
 At the start, the launcher initiates the game
 
-![Start Screenshot](Lancher.png)
+<p align="center">
+  <img src="Lancher.png" alt="Launcher" width="300">
+</p>
 
-When clicked upon, the Start button brings the palyer to this screen with the empy board and the first available tile ready to be placed.
+When clicked upon, the Start button brings the player to this screen with the empy board and the first available tile ready to be placed.
 
-![Board Screenshot](StartGame.png)
+<p align="center">
+  <img src="StartGame.png" alt="Board" width="300">
+</p>
 
 ---
 
@@ -52,9 +56,9 @@ When clicked upon, the Start button brings the palyer to this screen with the em
 - If a path contains a mismatching number, it scores 0 points.
 Example: If a **completed path** of **5 tiles** contains the number **8**, the path earns **8 × 5 = 40 points**.
 
-![Game Screenshot](Score.png)
-
-in the image, the score is 7 x 3 + 1 x 3 + 5 x 4 = 44.
+<p align="center">
+  <img src="Score.png" alt="In the image, the score is 7 x 3 + 1 x 3 + 5 x 4 = 44." width="300">
+</p>
 
 ---
 
