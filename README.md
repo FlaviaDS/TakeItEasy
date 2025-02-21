@@ -29,6 +29,14 @@ Make sure you have at least **Java 21** and at least **Gradle 8.0** installed on
  ./gradlew :launcher:run
 ```
 
+At the start, the launcher initiates the game
+
+![Start Screenshot](Lancher.png)
+
+When clicked upon, the Start button brings the palyer to this screen with the empy board and the first available tile ready to be placed.
+
+![Board Screenshot](StartGame.png)
+
 ---
 
 ## Rules
@@ -42,8 +50,11 @@ Make sure you have at least **Java 21** and at least **Gradle 8.0** installed on
 - A **complete path** (vertical, diagonal-left, diagonal-right) **earns points** (i.e., the line made of same numbers must run from one edge of the board to the opposite one).
 - The score of a path = **path number × number of tiles in that path**.
 - If a path contains a mismatching number, it scores 0 points.
-
 Example: If a **completed path** of **5 tiles** contains the number **8**, the path earns **8 × 5 = 40 points**.
+
+![Game Screenshot](Score.png)
+
+in the image, the score is 7*3 + 1*3 + 5*4 = 44.
 
 ---
 
