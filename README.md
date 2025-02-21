@@ -76,7 +76,6 @@ TakeItEasy
 │   │   ├── HexagonalGameBoardTest.java
 │   ├── build.gradle.kts
 │
-├── images/
 ├── .github/workflows/
 ├── .gradle/wrapper/
 ├── .idea/
