@@ -2,7 +2,7 @@
 
 ## The game
 
-This is a simplified version of the board game **"Take It Easy"** by Peter Burley, written in **Java**. The project follows the **Model-View-Controller (MVC) pattern**, designed for **educational purposes** and game enthusiasts who enjoy logic and strategy-based board games.
+This is a simplified, single-player version of the board game **"Take It Easy"** by Peter Burley, written in **Java**. The project follows the **Model-View-Controller (MVC) pattern**, designed for **educational purposes** and game enthusiasts who enjoy logic and strategy-based board games.
 
 This version follows the original **Take It Easy** rules: tiles are placed without rotation (in the board game, the numbers written on tiles have to be displayed so the numbers remain upright). The board consists of **19 hexagonal slots** where the player places drawn tiles. The goal is to align paths to maximize points.
 
