@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="006acda8-adef-491f-80b1-6b7a95eadc83" name="Changes" comment="" />
+    <list default="true" id="006acda8-adef-491f-80b1-6b7a95eadc83" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/launcher/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/launcher/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/launcher/src/main/java/org/example/Launcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/launcher/src/main/java/org/example/Launcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -131,7 +136,7 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "onboarding.tips.debug.path": "C:/Users/YOGA/IdeaProjects/Project_TIE_new/launcher/src/main/java/org/example/Main.java",
-    "project.structure.last.edited": "Project",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "settings.qodana",
@@ -404,7 +409,7 @@
       <workItem from="1739722552610" duration="44262000" />
       <workItem from="1739897408641" duration="9166000" />
       <workItem from="1739961380851" duration="49482000" />
-      <workItem from="1740073902286" duration="6752000" />
+      <workItem from="1740073902286" duration="7787000" />
     </task>
     <servers />
   </component>

@@ -1,7 +1,6 @@
 package org.example;
 
 import org.example.view.HexGridPanel;
-import org.example.view.GameBoardUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,15 +9,11 @@ import java.awt.event.ActionEvent;
 public class Launcher {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Choose Game Version");
+            JFrame frame = new JFrame("Hexagonal Game");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(300, 200);
-            frame.setLayout(new GridLayout(2, 1, 10, 10));
-
-            JButton btnClassic = getJButton(frame);
+            frame.setLayout(new GridLayout(1, 1, 10, 10)); // Solo un pulsante ora
             JButton btnHex = getButton(frame);
-
-            frame.add(btnClassic);
             frame.add(btnHex);
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
@@ -26,7 +21,7 @@ public class Launcher {
     }
 
     private static JButton getButton(JFrame frame) {
-        JButton btnHex = new JButton("5x5 Hexagonal Version");
+        JButton btnHex = new JButton("Start TakeItEasy");
         btnHex.setFont(new Font("Arial", Font.BOLD, 16));
         btnHex.addActionListener((ActionEvent _) -> {
             JFrame hexFrame = new JFrame("Hexagonal Game");
@@ -38,20 +33,5 @@ public class Launcher {
             frame.dispose();
         });
         return btnHex;
-    }
-
-    private static JButton getJButton(JFrame frame) {
-        JButton btnClassic = new JButton("3x3 Rectangular Version");
-        btnClassic.setFont(new Font("Arial", Font.BOLD, 16));
-        btnClassic.addActionListener((ActionEvent _) -> {
-            JFrame classicFrame = new JFrame("Rectangular Game");
-            classicFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            classicFrame.add(new GameBoardUI());
-            classicFrame.pack();
-            classicFrame.setLocationRelativeTo(null);
-            classicFrame.setVisible(true);
-            frame.dispose();
-        });
-        return btnClassic;
     }
 }

@@ -8,7 +8,7 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":classic"))
+    // implementation(project(":classic"))
     implementation(project(":hexagonal"))
 }
 

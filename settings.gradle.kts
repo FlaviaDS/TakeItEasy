@@ -1,2 +1,4 @@
 rootProject.name = "Project_TIE_new"
-include("launcher", "classic", "hexagonal")
+include("launcher"
+                    //, "classic")
+                    , "hexagonal")
