@@ -38,7 +38,7 @@ At the start, the launcher initiates the game
 When clicked upon, the Start button brings the player to this screen with the empy board and the first available tile ready to be placed.
 
 <p align="center">
-  <img src="StartGame.png" alt="Board" width="300">
+  <img src="StartGame.png" alt="Board" width="900">
 </p>
 
 ---
@@ -57,7 +57,7 @@ When clicked upon, the Start button brings the player to this screen with the em
 Example: If a **completed path** of **5 tiles** contains the number **8**, the path earns **8 × 5 = 40 points**.
 
 <p align="center">
-  <img src="Score.png" alt="In the image, the score is 7 x 3 + 1 x 3 + 5 x 4 = 44." width="300">
+  <img src="Score.png" alt="In the image, the score is 7 x 3 + 1 x 3 + 5 x 4 = 44." width="900">
 </p>
 
 ---
