@@ -6,8 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="006acda8-adef-491f-80b1-6b7a95eadc83" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/launcher/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/launcher/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/launcher/src/main/java/org/example/Launcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/launcher/src/main/java/org/example/Launcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hexagonal/src/main/java/org/example/model/HexTile.java" beforeDir="false" afterPath="$PROJECT_DIR$/hexagonal/src/main/java/org/example/model/HexTile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hexagonal/src/main/java/org/example/utils/TileLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/hexagonal/src/main/java/org/example/utils/TileLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hexagonal/src/test/java/org/example/HexagonalGameBoardTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/hexagonal/src/test/java/org/example/HexagonalGameBoardTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -111,6 +112,11 @@
     "Gradle.HexagonalGameBoardTest.testPlaceTileValidIndex.executor": "Run",
     "Gradle.HexagonalGameBoardTest.testPlacingDifferentTiles.executor": "Run",
     "Gradle.HexagonalGameBoardTest.testScoreCalculationWithFullBoard.executor": "Run",
+    "Gradle.HexagonalGameBoardTest.testScoreForEdgeCases.executor": "Run",
+    "Gradle.HexagonalGameBoardTest.testScoreForIntersectingLines.executor": "Run",
+    "Gradle.HexagonalGameBoardTest.testScoreForIntersectingLines2.executor": "Run",
+    "Gradle.HexagonalGameBoardTest.testScoreForMixedNumbersInLine.executor": "Run",
+    "Gradle.HexagonalGameBoardTest.testScoreForMultipleLines.executor": "Run",
     "Gradle.HexagonalGameBoardTest.testSingleCompleteLine.executor": "Run",
     "Gradle.HexagonalGameBoardTest.testTilePlacementOrder.executor": "Run",
     "Gradle.HexagonalGameBoardTest.testTileRotation.executor": "Run",
@@ -153,8 +159,8 @@
       <recent name="C:\Users\YOGA\IdeaProjects\Project_TIE_new\classic" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.HexagonalGameBoardTest.testIncompleteLines">
-    <configuration name="HexagonalGameBoardTest.testFullBoardMixedTiles" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+  <component name="RunManager" selected="Gradle.HexagonalGameBoardTest.testScoreForIntersectingLines2">
+    <configuration name="HexagonalGameBoardTest.testScoreForEdgeCases" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -167,7 +173,7 @@
           <list>
             <option value=":hexagonal:test" />
             <option value="--tests" />
-            <option value="&quot;org.example.HexagonalGameBoardTest.testFullBoardMixedTiles&quot;" />
+            <option value="&quot;org.example.HexagonalGameBoardTest.testScoreForEdgeCases&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -178,7 +184,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="HexagonalGameBoardTest.testIncompleteLines" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="HexagonalGameBoardTest.testScoreForIntersectingLines" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -191,7 +197,7 @@
           <list>
             <option value=":hexagonal:test" />
             <option value="--tests" />
-            <option value="&quot;org.example.HexagonalGameBoardTest.testIncompleteLines&quot;" />
+            <option value="&quot;org.example.HexagonalGameBoardTest.testScoreForIntersectingLines&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -202,7 +208,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="HexagonalGameBoardTest.testScoreCalculationWithFullBoard" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="HexagonalGameBoardTest.testScoreForIntersectingLines2" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -215,7 +221,7 @@
           <list>
             <option value=":hexagonal:test" />
             <option value="--tests" />
-            <option value="&quot;org.example.HexagonalGameBoardTest.testScoreCalculationWithFullBoard&quot;" />
+            <option value="&quot;org.example.HexagonalGameBoardTest.testScoreForIntersectingLines2&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -226,7 +232,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="HexagonalGameBoardTest.testSingleCompleteLine" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="HexagonalGameBoardTest.testScoreForMixedNumbersInLine" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -239,7 +245,7 @@
           <list>
             <option value=":hexagonal:test" />
             <option value="--tests" />
-            <option value="&quot;org.example.HexagonalGameBoardTest.testSingleCompleteLine&quot;" />
+            <option value="&quot;org.example.HexagonalGameBoardTest.testScoreForMixedNumbersInLine&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -250,7 +256,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="HexagonalGameBoardTest.testTwoIntersectingLines" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="HexagonalGameBoardTest.testScoreForMultipleLines" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -263,7 +269,7 @@
           <list>
             <option value=":hexagonal:test" />
             <option value="--tests" />
-            <option value="&quot;org.example.HexagonalGameBoardTest.testTwoIntersectingLines&quot;" />
+            <option value="&quot;org.example.HexagonalGameBoardTest.testScoreForMultipleLines&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -373,11 +379,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.HexagonalGameBoardTest.testIncompleteLines" />
-        <item itemvalue="Gradle.HexagonalGameBoardTest.testFullBoardMixedTiles" />
-        <item itemvalue="Gradle.HexagonalGameBoardTest.testTwoIntersectingLines" />
-        <item itemvalue="Gradle.HexagonalGameBoardTest.testSingleCompleteLine" />
-        <item itemvalue="Gradle.HexagonalGameBoardTest.testScoreCalculationWithFullBoard" />
+        <item itemvalue="Gradle.HexagonalGameBoardTest.testScoreForIntersectingLines2" />
+        <item itemvalue="Gradle.HexagonalGameBoardTest.testScoreForEdgeCases" />
+        <item itemvalue="Gradle.HexagonalGameBoardTest.testScoreForMixedNumbersInLine" />
+        <item itemvalue="Gradle.HexagonalGameBoardTest.testScoreForIntersectingLines" />
+        <item itemvalue="Gradle.HexagonalGameBoardTest.testScoreForMultipleLines" />
       </list>
     </recent_temporary>
   </component>
@@ -409,7 +415,7 @@
       <workItem from="1739722552610" duration="44262000" />
       <workItem from="1739897408641" duration="9166000" />
       <workItem from="1739961380851" duration="49482000" />
-      <workItem from="1740073902286" duration="7787000" />
+      <workItem from="1740073902286" duration="11272000" />
     </task>
     <servers />
   </component>
