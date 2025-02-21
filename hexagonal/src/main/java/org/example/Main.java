@@ -1,7 +1,5 @@
 package org.example;
-
 import org.example.view.HexGridPanel;
-
 import javax.swing.*;
 
 public class Main {

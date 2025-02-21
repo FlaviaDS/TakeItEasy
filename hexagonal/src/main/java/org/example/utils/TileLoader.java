@@ -1,5 +1,4 @@
 package org.example.utils;
-
 import org.example.model.HexTile;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -53,7 +52,7 @@ public class TileLoader {
             for (Map<String, Integer> data : tileData) {
                 tileDeck.add(new HexTile(data.get("leftPath"), data.get("rightPath"), data.get("topPath")));
             }
-            Collections.shuffle(tileDeck); // Mischiamo le tessere
+            Collections.shuffle(tileDeck);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -63,7 +62,12 @@ public class TileLoader {
         if (!tileDeck.isEmpty()) {
             return tileDeck.removeFirst();
         }
-        return null; // Se il mazzo è finito
+        return null;
     }
+
+    public static int getRemainingTiles() {
+        return tileDeck.size();
+    }
+
 
 }

@@ -1,5 +1,4 @@
 package org.example.model;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,13 +14,6 @@ public class HexTile {
 
     public List<Integer> getValues() {
         return values;
-    }
-
-    public void rotate() {
-        if (!values.isEmpty()) {
-            int first = values.removeFirst();
-            values.add(first);
-        }
     }
 
     @Override
