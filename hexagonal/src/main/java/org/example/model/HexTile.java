@@ -1,31 +1,24 @@
 package org.example.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HexTile {
-    private final List<Integer> values;
+    private final int topPath;
+    private final int rightPath;
+    private final int leftPath;
 
-    public HexTile(int v1, int v2, int v3) {
-        values = new ArrayList<>();
-        values.add(v1);
-        values.add(v2);
-        values.add(v3);
+    public HexTile(int topPath, int rightPath, int leftPath) {
+        this.topPath = topPath;
+        this.rightPath = rightPath;
+        this.leftPath = leftPath;
     }
 
     public List<Integer> getValues() {
-        return values;
-    }
-
-    public void rotate() {
-        if (!values.isEmpty()) {
-            int first = values.remove(0);
-            values.add(first);
-        }
+        return List.of(topPath, rightPath, leftPath);
     }
 
     @Override
     public String toString() {
-        return values.toString();
+        return "[" + topPath + ", " + rightPath + ", " + leftPath + "]";
     }
 }

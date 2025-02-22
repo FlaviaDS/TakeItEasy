@@ -1,7 +1,5 @@
 package org.example.model;
-
 import java.util.*;
-
 
 public class HexagonalGameBoard {
     private static final int BOARD_SIZE = 19;
@@ -83,5 +81,4 @@ public class HexagonalGameBoard {
         }
         return (values.size() == 1) ? line.size() * values.iterator().next() : 0;
     }
-
 }

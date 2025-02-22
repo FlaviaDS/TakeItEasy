@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - main
+      - no-rotation-mode
   pull_request:
     branches:
       - main
+      - no-rotation-mode
 
 jobs:
   build:
