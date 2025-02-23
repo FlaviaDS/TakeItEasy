@@ -155,4 +155,59 @@ public class HexagonalGameBoardTest {
         board.placeTile(18, new HexTile(9, 9, 9));
         assertEquals(0, board.calculateScore(), "Two separate tiles should not create a valid line");
     }
+
+    @Test
+    void testRemainingTilesAfterDraw() {
+        int initialSize = deckManager.getRemainingTiles();
+        for (int i = 0; i < 5; i++) {
+            deckManager.drawTile();
+        }
+        assertEquals(initialSize - 5, deckManager.getRemainingTiles(),
+                "The number of remaining tiles is incorrect after 5 draws.");
+    }
+
+    @Test
+    void testMaximumTiles() {
+        for (int i = 0; i < 19; i++) {
+            assertTrue(board.placeTile(i, deckManager.drawTile()),
+                    "Tile was not placed correctly at position " + i);
+        }
+        assertTrue(board.isBoardFull(), "The board should be full.");
+    }
+
+    @Test
+    void testPartialBoardState() {
+        board.placeTile(3, new HexTile(7, 7, 7));
+        board.placeTile(7, new HexTile(3, 3, 3));
+        board.placeTile(15, new HexTile(5, 5, 5));
+
+        assertNotNull(board.getTile(3), "Tile at position 3 should not be null.");
+        assertNotNull(board.getTile(7), "Tile at position 7 should not be null.");
+        assertNotNull(board.getTile(15), "Tile at position 15 should not be null.");
+        assertNull(board.getTile(10), "Tile at position 10 should be null.");
+    }
+
+    @Test
+    void testValidTileGeneration() {
+        for (int i = 0; i < 27; i++) {
+            HexTile tile = deckManager.drawTile();
+            assertNotNull(tile, "Drawn tile should not be null.");
+            assertEquals(3, tile.getValues().size(), "Each tile must have exactly 3 values.");
+        }
+    }
+
+    @Test
+    void testAllTilesUsed() {
+        Set<String> usedTiles = new HashSet<>();
+        // Place all 19 tiles
+        for (int i = 0; i < 19; i++) {
+            HexTile tile = deckManager.drawTile();
+            assertNotNull(tile, "Tile should not be null before the deck is empty.");
+            usedTiles.add(tile.toString());
+            board.placeTile(i, tile);
+        }
+        assertEquals(8, deckManager.getRemainingTiles(), "Deck should have 8 remaining tiles after a full board placement.");
+        // no duplicate tiles
+        assertEquals(19, usedTiles.size(), "All 19 placed tiles should be unique.");
+    }
 }
