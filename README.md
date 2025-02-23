@@ -93,6 +93,7 @@ TakeItEasy
 |           ├── HexTile.java
 │   │   ├── view/
 |           ├── HexGridPanel.java
+            ├── HexGridRenderer.java
 │   │   ├── utils/
 |           ├── TileDeckManager.java
 |           ├── TileLoader.java
