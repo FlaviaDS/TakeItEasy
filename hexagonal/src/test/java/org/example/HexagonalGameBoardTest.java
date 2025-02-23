@@ -19,7 +19,7 @@ public class HexagonalGameBoardTest {
     void setUp() {
         board = new HexagonalGameBoard();
         deckManager = new TileDeckManager();
-        deckManager.loadTiles(TileLoader.loadTiles()); // 🔹 CORRETTO
+        deckManager.loadTiles(TileLoader.loadTiles());
     }
 
     @Test
@@ -32,7 +32,7 @@ public class HexagonalGameBoardTest {
 
     @Test
     void testPlaceTileInvalidIndex() {
-        HexTile tile = deckManager.drawTile(); // 🔹 CORRETTO
+        HexTile tile = deckManager.drawTile();
         assertFalse(board.placeTile(-1, tile));
         assertFalse(board.placeTile(19, tile));
     }
@@ -40,16 +40,16 @@ public class HexagonalGameBoardTest {
     @Test
     void testFullBoardDetection() {
         for (int i = 0; i < 19; i++) {
-            board.placeTile(i, deckManager.drawTile()); // 🔹 CORRETTO
+            board.placeTile(i, deckManager.drawTile());
         }
         assertTrue(board.isBoardFull());
     }
 
     @Test
     void testDrawTileRemovesFromDeck() {
-        int initialSize = deckManager.getRemainingTiles(); // 🔹 CORRETTO
-        HexTile tile = deckManager.drawTile(); // 🔹 CORRETTO
-        int afterDrawSize = deckManager.getRemainingTiles(); // 🔹 CORRETTO
+        int initialSize = deckManager.getRemainingTiles();
+        HexTile tile = deckManager.drawTile();
+        int afterDrawSize = deckManager.getRemainingTiles();
         assertNotNull(tile);
         assertEquals(initialSize - 1, afterDrawSize);
     }
@@ -57,7 +57,7 @@ public class HexagonalGameBoardTest {
     @Test
     void testNoMoreTiles() {
         for (int i = 0; i < 27; i++) {
-            deckManager.drawTile(); // 🔹 CORRETTO
+            deckManager.drawTile();
         }
         assertNull(deckManager.drawTile(), "Should return null when deck is empty");
     }
@@ -66,7 +66,7 @@ public class HexagonalGameBoardTest {
     void testTilePlacementOrderAndUniqueness() {
         Set<String> uniqueTiles = new HashSet<>();
         for (int i = 0; i < 27; i++) {
-            HexTile tile = deckManager.drawTile(); // 🔹 CORRETTO
+            HexTile tile = deckManager.drawTile();
             assertNotNull(tile, "Tile should not be null");
             assertTrue(uniqueTiles.add(tile.toString()), "Duplicate tile: " + tile);
         }
