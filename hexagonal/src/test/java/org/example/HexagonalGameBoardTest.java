@@ -1,6 +1,8 @@
 package org.example;
+
 import org.example.model.HexagonalGameBoard;
 import org.example.model.HexTile;
+import org.example.utils.TileDeckManager;
 import org.example.utils.TileLoader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,16 +13,18 @@ import java.util.HashSet;
 public class HexagonalGameBoardTest {
 
     private HexagonalGameBoard board;
+    private TileDeckManager deckManager;
 
     @BeforeEach
     void setUp() {
         board = new HexagonalGameBoard();
-        TileLoader.loadTiles();
+        deckManager = new TileDeckManager();
+        deckManager.loadTiles(TileLoader.loadTiles()); // 🔹 CORRETTO
     }
 
     @Test
     void testPlaceTileValidIndex() {
-        HexTile tile = TileLoader.drawTile();
+        HexTile tile = deckManager.drawTile();
         assertNotNull(tile, "Tile drawn should not be null");
         assertTrue(board.placeTile(9, tile));
         assertSame(tile, board.getTile(9));
@@ -28,7 +32,7 @@ public class HexagonalGameBoardTest {
 
     @Test
     void testPlaceTileInvalidIndex() {
-        HexTile tile = TileLoader.drawTile();
+        HexTile tile = deckManager.drawTile(); // 🔹 CORRETTO
         assertFalse(board.placeTile(-1, tile));
         assertFalse(board.placeTile(19, tile));
     }
@@ -36,16 +40,16 @@ public class HexagonalGameBoardTest {
     @Test
     void testFullBoardDetection() {
         for (int i = 0; i < 19; i++) {
-            board.placeTile(i, TileLoader.drawTile());
+            board.placeTile(i, deckManager.drawTile()); // 🔹 CORRETTO
         }
         assertTrue(board.isBoardFull());
     }
 
     @Test
     void testDrawTileRemovesFromDeck() {
-        int initialSize = TileLoader.getRemainingTiles();
-        HexTile tile = TileLoader.drawTile();
-        int afterDrawSize = TileLoader.getRemainingTiles();
+        int initialSize = deckManager.getRemainingTiles(); // 🔹 CORRETTO
+        HexTile tile = deckManager.drawTile(); // 🔹 CORRETTO
+        int afterDrawSize = deckManager.getRemainingTiles(); // 🔹 CORRETTO
         assertNotNull(tile);
         assertEquals(initialSize - 1, afterDrawSize);
     }
@@ -53,16 +57,16 @@ public class HexagonalGameBoardTest {
     @Test
     void testNoMoreTiles() {
         for (int i = 0; i < 27; i++) {
-            TileLoader.drawTile();
+            deckManager.drawTile(); // 🔹 CORRETTO
         }
-        assertNull(TileLoader.drawTile(), "Should return null when deck is empty");
+        assertNull(deckManager.drawTile(), "Should return null when deck is empty");
     }
 
     @Test
     void testTilePlacementOrderAndUniqueness() {
         Set<String> uniqueTiles = new HashSet<>();
         for (int i = 0; i < 27; i++) {
-            HexTile tile = TileLoader.drawTile();
+            HexTile tile = deckManager.drawTile(); // 🔹 CORRETTO
             assertNotNull(tile, "Tile should not be null");
             assertTrue(uniqueTiles.add(tile.toString()), "Duplicate tile: " + tile);
         }

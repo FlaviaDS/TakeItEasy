@@ -2,16 +2,19 @@ package org.example.control;
 
 import org.example.model.HexTile;
 import org.example.model.HexagonalGameBoard;
+import org.example.utils.TileDeckManager;
 import org.example.utils.TileLoader;
 
 public class GameController {
     private final HexagonalGameBoard board;
+    private final TileDeckManager deckManager;
     private HexTile currentTile;
 
     public GameController() {
         board = new HexagonalGameBoard();
-        TileLoader.loadTiles();
-        currentTile = TileLoader.drawTile();
+        deckManager = new TileDeckManager();
+        deckManager.loadTiles(TileLoader.loadTiles());
+        currentTile = deckManager.drawTile();
     }
 
     public boolean placeTile(int index) {
@@ -21,10 +24,9 @@ public class GameController {
         if (!board.placeTile(index, currentTile)) {
             return false;
         }
-        currentTile = TileLoader.drawTile();
+        currentTile = deckManager.drawTile();
         return true;
     }
-
 
     public HexTile getNextTile() {
         return currentTile;

@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -43,30 +42,17 @@ public class TileLoader {
         ]
     """;
 
-    private static final List<HexTile> tileDeck = new ArrayList<>();
-
-    public static void loadTiles() {
+    public static List<HexTile> loadTiles() {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             List<Map<String, Integer>> tileData = objectMapper.readValue(TILE_JSON, new TypeReference<>() {});
-            tileDeck.clear();
+            List<HexTile> tiles = new ArrayList<>();
             for (Map<String, Integer> data : tileData) {
-                tileDeck.add(new HexTile(data.get("topPath"), data.get("rightPath"), data.get("leftPath")));
+                tiles.add(new HexTile(data.get("topPath"), data.get("rightPath"), data.get("leftPath")));
             }
-            Collections.shuffle(tileDeck);
+            return tiles;
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Error in Tiles loading", e);
         }
-    }
-
-    public static HexTile drawTile() {
-        if (!tileDeck.isEmpty()) {
-            return tileDeck.remove(0); // 🔹 Fixato il bug removeFirst() → remove(0)
-        }
-        return null;
-    }
-
-    public static int getRemainingTiles() {
-        return tileDeck.size();
     }
 }
