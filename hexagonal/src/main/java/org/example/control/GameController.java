@@ -15,13 +15,16 @@ public class GameController {
     }
 
     public boolean placeTile(int index) {
-        if (board.getTile(index) != null) return false;
-        boolean placed = board.placeTile(index, currentTile);
-        if (placed) {
-            currentTile = TileLoader.drawTile();
+        if (board.getTile(index) != null) {
+            return false;
         }
-        return placed;
+        if (!board.placeTile(index, currentTile)) {
+            return false;
+        }
+        currentTile = TileLoader.drawTile();
+        return true;
     }
+
 
     public HexTile getNextTile() {
         return currentTile;

@@ -25,26 +25,33 @@ public class HexagonalGameBoard {
     }
 
     public int calculateScore() {
+        Map<CubeCoordinates, Integer> cellsMap = buildCellsMap();
+        int score = 0;
+        for (int dir = 0; dir < 3; dir++) {
+            score += calculateScoreForDirection(dir, cellsMap);
+        }
+        return score;
+    }
+
+    private Map<CubeCoordinates, Integer> buildCellsMap() {
         List<CubeCoordinates> coords = new CubeCoordinates(0, 0, 0).navigateSpiral(2);
         Map<CubeCoordinates, Integer> cellsMap = new HashMap<>();
         for (int i = 0; i < BOARD_SIZE; i++) {
             cellsMap.put(coords.get(i), i);
         }
+        return cellsMap;
+    }
+
+    private int calculateScoreForDirection(int dir, Map<CubeCoordinates, Integer> cellsMap) {
         int score = 0;
-
-        // 0 (vertical), 1 (diagonal dx), 2 (diagonal sx)
-        for (int dir = 0; dir < 3; dir++) {
-            Set<CubeCoordinates> available = new HashSet<>(cellsMap.keySet());
-            while (!available.isEmpty()) {
-                CubeCoordinates picked = available.iterator().next();
-                List<CubeCoordinates> line = buildLine(picked, dir, cellsMap);
-
-                if (isEdgeToEdge(line)) {
-                    int lineScore = calculateLineScore(line, dir, cellsMap);
-                    score += lineScore;
-                }
-                line.forEach(available::remove);
+        Set<CubeCoordinates> available = new HashSet<>(cellsMap.keySet());
+        while (!available.isEmpty()) {
+            CubeCoordinates picked = available.iterator().next();
+            List<CubeCoordinates> line = buildLine(picked, dir, cellsMap);
+            if (isEdgeToEdge(line)) {
+                score += calculateLineScore(line, dir, cellsMap);
             }
+            line.forEach(available::remove);
         }
         return score;
     }
