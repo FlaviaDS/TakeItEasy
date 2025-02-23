@@ -86,9 +86,16 @@ TakeItEasy
 ├── hexagonal/
 │   ├── src/main/java/org/example/
 │   │   ├── controller/
+|           ├── GameController.java
 │   │   ├── model/
+|           ├── CubeCoordinates.java
+|           ├── HexagonalGameBaord.java
+|           ├── HexTile.java
 │   │   ├── view/
+|           ├── HexGridPanel.java
 │   │   ├── utils/
+|           ├── TileDeckManager.java
+|           ├── TileLoader.java
 │   ├── src/test/java/org/example/
 │   │   ├── HexagonalGameBoardTest.java
 │   ├── build.gradle.kts
