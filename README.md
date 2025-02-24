@@ -16,7 +16,7 @@ Make sure you have at least **Java 21** and at least **Gradle 8.0** installed on
 ### Clone the Repository
 ```sh
  git clone https://github.com/FlaviaDS/TakeItEasy.git
- cd TakeItEasy
+ cd Project_TIE_new
 ```
 
 ### Run the Game
