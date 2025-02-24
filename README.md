@@ -143,11 +143,12 @@ dependencies {
 ### Architecture
 
 The code is organised in different folders, separating tasks:
-    - The hexagonal/src/main/java/org/example/control/ implements the game logic and initialization.
-    - The hexagonal/src/main/java/org/example/model/ package implements the core game model for a hexagonal board game, defining the game’s structure, tile interactions, and scoring system.
-    - A utils package hexagonal/src/main/java/org/example/utils/, contains utility functions for the classes.
-    - The hexagonal/src/main/java/org/example/view/ package implements the UI using Swing.
-    - The hexagonal/src/main/java/org/example/Main.java class initializes and launches the Swing-based game window. 
+
+- The hexagonal/src/main/java/org/example/control/ implements the game logic and initialization.
+- The hexagonal/src/main/java/org/example/model/ package implements the core game model for a hexagonal board game, defining the game’s structure, tile interactions, and scoring system.
+- A utils package hexagonal/src/main/java/org/example/utils/, contains utility functions for the classes.
+- The hexagonal/src/main/java/org/example/view/ package implements the UI using Swing.
+- The hexagonal/src/main/java/org/example/Main.java class initializes and launches the Swing-based game window. 
 
 The application entrypoint is defined in the Launcher class contained in launcher/src/main/java/org/example/, which launches the application.
 
