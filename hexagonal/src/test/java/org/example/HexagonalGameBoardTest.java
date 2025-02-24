@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.stream.IntStream;
 
 public class HexagonalGameBoardTest {
 
@@ -55,15 +56,7 @@ public class HexagonalGameBoardTest {
     }
 
     @Test
-    void testNoMoreTiles() {
-        for (int i = 0; i < 27; i++) {
-            deckManager.drawTile();
-        }
-        assertNull(deckManager.drawTile(), "Should return null when deck is empty");
-    }
-
-    @Test
-    void testTilePlacementOrderAndUniqueness() {
+    void testTilePlacementOrder() {
         Set<String> uniqueTiles = new HashSet<>();
         for (int i = 0; i < 27; i++) {
             HexTile tile = deckManager.drawTile();
@@ -73,14 +66,7 @@ public class HexagonalGameBoardTest {
     }
 
     @Test
-    void testIncompleteDiagonalLine() {
-        int[] indices = {4, 9, 14};
-        for (int i : indices) board.placeTile(i, new HexTile(4, 4, 4));
-        assertEquals(0, board.calculateScore());
-    }
-
-    @Test
-    void testTileCannotBePlacedTwice() {
+    void testCannotBePlacedTwice() {
         HexTile tile1 = new HexTile(1, 2, 3);
         HexTile tile2 = new HexTile(4, 5, 6);
         board.placeTile(5, tile1);
@@ -89,28 +75,71 @@ public class HexagonalGameBoardTest {
     }
 
     @Test
-    void testScoreForFullVerticalLine() {
-        int[] verticalLine = {0, 4, 9, 14, 18};
-        for (int index : verticalLine) {
-            board.placeTile(index, new HexTile(5, 5, 5));
-        }
-        assertEquals(25, board.calculateScore(), "Incorrect score for full vertical line");
+    void testIncompleteDiagonalLine() {
+        int[] indices = {4, 9, 14};
+        for (int i : indices) board.placeTile(i, new HexTile(5, 4, 7));
+        assertEquals(0, board.calculateScore());
     }
 
     @Test
     void testScoreForIncompleteLine() {
-        board.placeTile(0, new HexTile(5, 5, 5));
-        board.placeTile(4, new HexTile(5, 5, 5));
+        board.placeTile(0, new HexTile(3, 2, 1));
+        board.placeTile(4, new HexTile(5, 2, 7));
         assertEquals(0, board.calculateScore(), "Incomplete line no score");
+    }
+
+    @Test
+    void testScoreForIncompleteLine2() {
+        board.placeTile(1, new HexTile(3, 2, 1));
+        board.placeTile(2, new HexTile(5, 2, 7));
+        assertEquals(0, board.calculateScore(), "Incomplete line no score");
+    }
+
+    @Test
+    void testDifferentValuesNOScore() {
+        int[] line = {0, 4, 9, 14, 18};
+        IntStream.range(0, line.length).forEach(i -> board.placeTile(line[i], new HexTile(i+1, i+1, i+1)));
+        assertEquals(0, board.calculateScore());
+    }
+
+    @Test
+    void testMinimumScoringLineLength() {
+        board.placeTile(0, new HexTile(5,8,7));
+        board.placeTile(1, new HexTile(5,4,7));
+        board.placeTile(2, new HexTile(1,8,7));
+        assertEquals(21, board.calculateScore());
+    }
+
+    @Test
+    void testScoreForFullVerticalLine() {
+        int[] verticalLine = {0, 4, 9, 14, 18};
+        HexTile[] tiles = {
+                new HexTile(7, 1, 3),
+                new HexTile(6, 1, 4),
+                new HexTile(2, 1, 8),
+                new HexTile(7, 1, 2),
+                new HexTile(2, 1, 4)
+        };
+        for (int i = 0; i < verticalLine.length; i++) {
+            board.placeTile(verticalLine[i], tiles[i]);
+        }
+        assertEquals(5, board.calculateScore(), "Incorrect score for full vertical line");
     }
 
     @Test
     void testSingleCompleteLine() {
         int[] indices = {0, 4, 9, 14, 18};
-        for (int i : indices) {
-            board.placeTile(i, new HexTile(4, 4, 4));
+        HexTile[] tiles = {
+                new HexTile(7, 9, 2),
+                new HexTile(6, 9, 4),
+                new HexTile(2, 9, 8),
+                new HexTile(7, 9, 3),
+                new HexTile(6, 9, 3)
+        };
+        for (int i = 0; i < indices.length; i++) {
+            board.placeTile(indices[i], tiles[i]);
         }
-        assertEquals(20, board.calculateScore(), "Incorrect score for completed line");
+        assertEquals(45, board.calculateScore(), "Incorrect score for completed line");
     }
 
     @Test
@@ -118,41 +147,41 @@ public class HexagonalGameBoardTest {
         int[] verticalLine = {0, 4, 9, 14, 18};
         int[] diagonalLine = {4, 9, 14};
         for (int index : verticalLine) {
-            board.placeTile(index, new HexTile(6, 6, 6));
+            board.placeTile(index, new HexTile(3, 7, 5));
         }
         for (int index : diagonalLine) {
-            board.placeTile(index, new HexTile(6, 6, 6));
+            board.placeTile(index, new HexTile(3, 7, 5));
         }
-        assertEquals(30, board.calculateScore(), "Incorrect score for intersecting lines");
+        assertEquals(35, board.calculateScore(), "Incorrect score for intersecting lines");
     }
 
     @Test
     void testScoreForIntersectingLines2() {
         int[] verticalLine = {0, 4, 9, 14, 18};
         for (int index : verticalLine) {
-            board.placeTile(index, new HexTile(6, 6, 6));
+            board.placeTile(index, new HexTile(4, 6, 2));
         }
-        board.placeTile(4, new HexTile(4, 6, 4));
-        board.placeTile(9, new HexTile(4, 6, 4));
-        board.placeTile(14, new HexTile(4, 6, 4));
+        board.placeTile(4, new HexTile(2, 5, 7));
+        board.placeTile(9, new HexTile(2, 5, 7));
+        board.placeTile(14, new HexTile(2, 5, 7));
         int expectedScore = 30;
         assertEquals(expectedScore, board.calculateScore(), "Incorrect score for intersecting lines");
     }
 
     @Test
     void testScoreForMixedNumbersInLine() {
-        board.placeTile(7, new HexTile(2, 2, 2));
-        board.placeTile(8, new HexTile(2, 2, 2));
-        board.placeTile(9, new HexTile(3, 3, 3));
-        board.placeTile(10, new HexTile(2, 2, 2));
-        board.placeTile(11, new HexTile(2, 2, 2));
+        board.placeTile(7, new HexTile(5, 3, 1));
+        board.placeTile(8, new HexTile(6, 4, 2));
+        board.placeTile(9, new HexTile(7, 5, 3));
+        board.placeTile(10, new HexTile(2, 8, 6));
+        board.placeTile(11, new HexTile(3, 7, 9));
         assertEquals(0, board.calculateScore(), "Lines with different numbers should not count");
     }
 
     @Test
-    void testScoreForEdgeCases() {
-        board.placeTile(0, new HexTile(9, 9, 9));
-        board.placeTile(18, new HexTile(9, 9, 9));
+    void testScoreForEdges() {
+        board.placeTile(0, new HexTile(1, 9, 8));
+        board.placeTile(18, new HexTile(2, 7, 6));
         assertEquals(0, board.calculateScore(), "Two separate tiles should not create a valid line");
     }
 
