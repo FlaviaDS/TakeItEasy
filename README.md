@@ -174,8 +174,8 @@ view
     
 In this implementation, a MVC-based approach was followed, with some design choices that match game mechanics and implementation needs.
 
-Regarding access modifiers, public methods were used for components that require interaction across different packages, enabling potential future extensions, while protected or private methods were applied to internal functionalities within classes to maintain encapsulation and prevent external modifications. For example, core classes such as HexagonalGameBoard and HexTile are declared as public, making them accessible throughout the application, together with methods meant for interaction with other components, like placeTile in HexagonalGameBoard.\\
-Within HexagonalGameBoard, variables that maintain the internal state are declared as private. In this perspective, methods used internally for auxiliary operations (such as validating moves) are designated as private to prevent external access.\\
+Regarding access modifiers, public methods were used for components that require interaction across different packages, enabling potential future extensions, while protected or private methods were applied to internal functionalities within classes to maintain encapsulation and prevent external modifications. For example, core classes such as HexagonalGameBoard and HexTile are declared as public, making them accessible throughout the application, together with methods meant for interaction with other components, like placeTile in HexagonalGameBoard.
+Within HexagonalGameBoard, variables that maintain the internal state are declared as private. In this perspective, methods used internally for auxiliary operations (such as validating moves) are designated as private to prevent external access.
 In classes like HexTile, methods that might be overridden by subclasses are marked as protected, facilitating inheritance while maintaining encapsulation.
 
 This design choice follows the idea of a maintainable codebase, allowing for future enhancements without compromising the integrity of the existing structure.
