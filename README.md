@@ -129,7 +129,7 @@ The project follows the **MVC Pattern**:
 - **Jackson** (JSON parsing for tiles)
 - **Swing** (graphical user interface)
 
-### Dependencies (Gradle)
+### Dependencies
 ```gradle
 dependencies {
     implementation ("com.fasterxml.jackson.core:jackson-databind:2.15.0")
@@ -140,41 +140,42 @@ dependencies {
 
 ---
 
-Architecture
+### Architecture
 
 The code is organised in different folders, separating tasks:
-
-    The hexagonal/src/main/java/org/example/control/ implements the game logic and initialization.
-    The hexagonal/src/main/java/org/example/model/ package implements the core game model for a hexagonal board game, defining the game’s structure, tile interactions, and scoring system.
-    A utils package hexagonal/src/main/java/org/example/utils/, contains utility functions for the classes.
-    The hexagonal/src/main/java/org/example/view/ package implements the UI using Swing.
-    The hexagonal/src/main/java/org/example/Main.java class initializes and launches the Swing-based game window. 
+    - The hexagonal/src/main/java/org/example/control/ implements the game logic and initialization.
+    - The hexagonal/src/main/java/org/example/model/ package implements the core game model for a hexagonal board game, defining the game’s structure, tile interactions, and scoring system.
+    - A utils package hexagonal/src/main/java/org/example/utils/, contains utility functions for the classes.
+    - The hexagonal/src/main/java/org/example/view/ package implements the UI using Swing.
+    - The hexagonal/src/main/java/org/example/Main.java class initializes and launches the Swing-based game window. 
 
 The application entrypoint is defined in the Launcher class contained in launcher/src/main/java/org/example/, which launches the application.
 
 control
 
-    GameController: the class manages the core game logic for a hexagonal board game. It initializes the game board and tile deck, handles tile placement on the board, tracks the current tile to be placed, updates the game state (e.g. drawing new tiles), checks for game-over conditions, and gives access to the score and board state. It acts as a bridge between the game model and UI/other components.
+- GameController: the class manages the core game logic for a hexagonal board game. It initializes the game board and tile deck, handles tile placement on the board, tracks the current tile to be placed, updates the game state (e.g. drawing new tiles), checks for game-over conditions, and gives access to the score and board state. It acts as a bridge between the game model and UI/other components.
 
 model
 
-    CubeCoordinates: The CubeCoordinates record implements hexagonal grid logic using axial cube coordinates. It puts cube coordinate constraint: x + y + z = 0, provides 6 directional vectors for hexagonal movement, calculates adjacent tile positions, creates hexagonal rings of coordinates. It is essential for hexagonal grid calculations in games/simulations, handling spatial relationshipsand coordinate system conversions.
-    HexagonalGameBoard: The HexagonalGameBoard class manages a hexagonal game board and implements gameplay logic. It maintains a 19-tile hexagonal board, tracks tile placement validity, manages the scoring system (a valid line earns line_length × value if all tiles share the same value in the evaluated direction, and scores lines span from board edge to edge, in three directions).
-    HexTile: represents a hexagonal game tile with three directional path values. It builds them storing numeric values for three edges: topPath, rightPath, leftPath. Tile properties remain constant after creation.
+- CubeCoordinates: The CubeCoordinates record implements hexagonal grid logic using axial cube coordinates. It puts cube coordinate constraint: x + y + z = 0, provides 6 directional vectors for hexagonal movement, calculates adjacent tile positions, creates hexagonal rings of coordinates. It is essential for hexagonal grid calculations in games/simulations, handling spatial relationshipsand coordinate system conversions.
+- HexagonalGameBoard: The HexagonalGameBoard class manages a hexagonal game board and implements gameplay logic. It maintains a 19-tile hexagonal board, tracks tile placement validity, manages the scoring system (a valid line earns line_length × value if all tiles share the same value in the evaluated direction, and scores lines span from board edge to edge, in three directions).
+- HexTile: represents a hexagonal game tile with three directional path values. It builds them storing numeric values for three edges: topPath, rightPath, leftPath. Tile properties remain constant after creation.
 
 utils
 
-    TielDeckManager: is used to handle the tiles during a game, guaranteeing that they are shuffled before the game and drawn one at a time; it also monitors the remaining tiles from the deck of 27.
-    TileLoader: this class loads a predefined set of hexagonal tiles (HexTile) from a JSON string. It uses Jackson's ObjectMapper to parse the JSON into a list of maps, then converts each entry into a HexTile object. This ensures that the game starts with a standard set of tiles without requiring an external file. If an error occurs during loading, a RuntimeException is thrown.
+- TileDeckManager: is used to handle the tiles during a game, guaranteeing that they are shuffled before the game and drawn one at a time; it also monitors the remaining tiles from the deck of 27.
+- TileLoader: this class loads a predefined set of hexagonal tiles (HexTile) from a JSON string. It uses Jackson's ObjectMapper to parse the JSON into a list of maps, then converts each entry into a HexTile object. This ensures that the game starts with a standard set of tiles without requiring an external file. If an error occurs during loading, a RuntimeException is thrown.
     
 view
 
-    HexGridPanel: it is a Swing JPanel that displays and manages the hexagonal game board. It initializes a GameController and a HexGridRenderer to handle game logic and rendering. It handles user input, detecting mouse clicks to place tiles on the board. It resizes the board dynamically, adjusting sizes when the panel is resized; it renders the board, calling HexGridRenderer to draw the board. Finally, it checks the game over situation.
-    HexGridRenderer: this class handles rendering the hexagonal game board in Swing. It dynamically calculates hex positions, draws tiles, and displays tile numbers with color-coded highlights. It adapts to window resizing, adjusting hex sizes, detects mouse clicks to determine which hex is selected, previews the next tile before placement and uses cube coordinates for accurate hexagonal positioning. This class ensures visual game rendering while integrating with the GameController.
+- HexGridPanel: it is a Swing JPanel that displays and manages the hexagonal game board. It initializes a GameController and a HexGridRenderer to handle game logic and rendering. It handles user input, detecting mouse clicks to place tiles on the board. It resizes the board dynamically, adjusting sizes when the panel is resized; it renders the board, calling HexGridRenderer to draw the board. Finally, it checks the game over situation.
+- HexGridRenderer: this class handles rendering the hexagonal game board in Swing. It dynamically calculates hex positions, draws tiles, and displays tile numbers with color-coded highlights. It adapts to window resizing, adjusting hex sizes, detects mouse clicks to determine which hex is selected, previews the next tile before placement and uses cube coordinates for accurate hexagonal positioning. This class ensures visual game rendering while integrating with the GameController.
     
 In this implementation, a MVC-based approach was followed, with some design choices that match game mechanics and structural needs.
 
-    Regarding access modifiers, public methods were used for components that require interaction across different packages, facilitating flexibility and potential future extensions, while protected or private methods were applied to internal functionalities within classes to maintain encapsulation and prevent external modifications.
+Regarding access modifiers, public methods were used for components that require interaction across different packages, facilitating flexibility and potential future extensions, while protected or private methods were applied to internal functionalities within classes to maintain encapsulation and prevent external modifications. For example, core classes such as HexagonalGameBoard and HexTile are declared as public, making them accessible throughout the application, together with methods intended for interaction with other components, like placeTile in HexagonalGameBoard, that are marked as public to allow external access.\\
+Within HexagonalGameBoard, variables that maintain the internal state are declared as private to ensure encapsulation. In thi optics, methods used internally for auxiliary operations, such as validating moves, are designated as private to prevent external access.\\
+In classes like HexTile, methods that might be overridden by subclasses are marked as protected, facilitating inheritance while maintaining encapsulation.
 
 This design choice follows the idea of a maintainable codebase, allowing for future enhancements without compromising the integrity of the existing structure.
 
