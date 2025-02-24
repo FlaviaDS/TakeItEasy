@@ -8,7 +8,7 @@ This version follows the original **Take It Easy** rules: tiles are placed witho
 
 ---
 
-## Start the game
+### Start the game
 
 ### Prerequisites
 Make sure you have at least **Java 21** and at least **Gradle 8.0** installed on your system.
@@ -43,7 +43,7 @@ When clicked upon, the Start button brings the player to this screen with the em
 
 ---
 
-## Rules
+### Rules
 - Each turn, a **random tile** is drawn from a **deck of 27 tiles**.
 - The player must **place the tile** in one of the 19 empty hexagonal slots, at his/her choice.
 - Tiles are placed as drawn.
@@ -187,7 +187,7 @@ This project is licensed under the **MIT License**. It is for educational purpos
 
 ---
 
-## Contributors
+## Author
 - **Flavia De Santis**
 
 ---
