@@ -154,11 +154,11 @@ The application entrypoint is defined in the Launcher class contained in launche
 
 control
 
-- GameController: the class manages the core game logic for a hexagonal board game. It initializes the game board and tile deck, handles tile placement on the board, tracks the current tile to be placed, updates the game state (e.g. drawing new tiles), checks for game-over conditions, and gives access to the score and board state. It acts as a bridge between the game model and UI/other components.
+- GameController: the class manages the core game logic for a hexagonal board game. It initializes the game board and tile deck, handles tile placement on the board, tracks the current tile to be placed, updates the game state (e.g. drawing new tiles), checks for game-over conditions, and gives access to the score and board state. It acts as a bridge between the game model and UI.
 
 model
 
-- CubeCoordinates: The CubeCoordinates record implements hexagonal grid logic using axial cube coordinates. It puts cube coordinate constraint: x + y + z = 0, provides 6 directional vectors for hexagonal movement, calculates adjacent tile positions, creates hexagonal rings of coordinates. It is essential for hexagonal grid calculations in games/simulations, handling spatial relationshipsand coordinate system conversions.
+- CubeCoordinates: The CubeCoordinates record implements hexagonal grid logic using axial cube coordinates. It puts cube coordinate constraint: x + y + z = 0, provides 6 directional vectors for hexagonal movement, calculates adjacent tile positions, creates hexagonal rings of coordinates. It is essential for hexagonal grid calculations in games, handling spatial relationships and coordinate system conversions.
 - HexagonalGameBoard: The HexagonalGameBoard class manages a hexagonal game board and implements gameplay logic. It maintains a 19-tile hexagonal board, tracks tile placement validity, manages the scoring system (a valid line earns line_length × value if all tiles share the same value in the evaluated direction, and scores lines span from board edge to edge, in three directions).
 - HexTile: represents a hexagonal game tile with three directional path values. It builds them storing numeric values for three edges: topPath, rightPath, leftPath. Tile properties remain constant after creation.
 
